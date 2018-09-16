@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: c7e1d7005d8cadf44bb896d16abaf4db
+timeCreated: 1534545555
+licenseType: Pro
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Intro Cond
+  fontNames:
+  - Intro Cond
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4e34b76c11474274cb17e85c9ad62314, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
