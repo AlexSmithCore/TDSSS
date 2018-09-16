@@ -11,6 +11,8 @@ public class HumanController : MonoBehaviour {
 
 	public AllAgentsManager am;
 
+    public float FollowPlayer = 30f;
+
 	void Start(){
 		am = GameObject.Find("HumanAndMosterController").GetComponent<AllAgentsManager>();
 
@@ -26,20 +28,27 @@ public class HumanController : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		human.SetDestination(target.transform.position);
-	} 
-
-	void OnCollisionEnter(Collision other){
-		Debug.Log(other.collider.tag);
-		if(other.collider.tag == "Enemy" && !isDetected){
-			isDetected = true;
-		}
+        
+        
+        human.SetDestination(target.transform.position);
+        
 	}
 
-	void OnCollisionExit(Collision other){
-		print(other.collider.tag);
-		if(other.collider.tag == "Enemy"){
+    void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.tag == "Enemy" && !isDetected)
+        {
+            isDetected = true;
+            //target = other.tranform.position;
+            Debug.Log(other.tag);
+        }
+    }
+
+    void OnTriggerExit(Collider other){
+		if(other.tag == "Enemy"){
 			isDetected = false;
-		}
+            //target = FindObjectOfType<PlayerController>();
+        }
 	}
 }
