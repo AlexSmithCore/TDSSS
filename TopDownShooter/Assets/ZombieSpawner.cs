@@ -29,7 +29,6 @@ public class ZombieSpawner : MonoBehaviour {
 	}
 
 	void SpawnEnemy(){
-		timeToWait -= 0.05f;
 		int rand = Random.Range(0,transform.childCount);
 		GameObject enemy = Instantiate(zombie, new Vector3(spawnPoints[rand].position.x, 0f, spawnPoints[rand].position.z), Quaternion.identity);
 		StartCoroutine(WaitToSpawn());
