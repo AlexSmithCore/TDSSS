@@ -27,10 +27,14 @@ public class HumanController : MonoBehaviour {
 
 	private float bestDist;
 
+	private Animator animator;
+	public float Speed = 10f;
+
 	void Start(){
 		bestDist = keepDist;
 		am = GameObject.Find("HumanAndMosterController").GetComponent<AllAgentsManager>();
 
+		animator = GetComponent<Animator>();
 		human = GetComponent<NavMeshAgent>();
 		mainTarget = GameObject.FindGameObjectWithTag("Player").transform;
 		target = mainTarget;
@@ -42,6 +46,7 @@ public class HumanController : MonoBehaviour {
 		}
 	}
 
+	
 	void FixedUpdate(){
 		distToMain = Vector3.Distance(this.transform.position, mainTarget.position);
 
@@ -60,6 +65,13 @@ public class HumanController : MonoBehaviour {
 		if(isDetected){
 			this.transform.LookAt(target.transform.position);
 		}
+
+		if (human.velocity.magnitude >= Speed || human.velocity.magnitude < 0){
+			animator.SetFloat("Move", 1f);
+		}
+		else{
+			animator.SetFloat("Move", human.velocity.magnitude/Speed);
+		}
 	}
 
 	void OnTriggerStay(Collider other){
@@ -75,7 +87,7 @@ public class HumanController : MonoBehaviour {
 				bestDist = keepDist;
 				isDetected = false;
 			}
-			Debug.Log(bestDist);
+			//Debug.Log(bestDist);
 		}
 	}
 
