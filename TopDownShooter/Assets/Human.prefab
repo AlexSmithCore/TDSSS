@@ -198,8 +198,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDetected: 0
+  mainTarget: {fileID: 0}
+  target: {fileID: 0}
+  distToFollow: 12
+  keepDist: 10
+  enemiesList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   am: {fileID: 0}
-  FollowPlayer: 100
 --- !u!135 &135113917768593054
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -210,7 +220,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &195163074395375836
 NavMeshAgent:

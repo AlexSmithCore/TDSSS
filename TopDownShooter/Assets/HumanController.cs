@@ -5,20 +5,35 @@ public class HumanController : MonoBehaviour {
 
 	public bool isDetected = false;
 
-	private PlayerController target;
+	public Transform mainTarget;
+	[SerializeField]
+	private Transform target;
+
+	[SerializeField]
+	private float distToFollow;
+
+	[SerializeField]
+	private int keepDist;
+
+	private float distToMain;
+
+	private float distToEnemy;
+
+	public GameObject[] enemiesList;
 
 	private NavMeshAgent human;
 
 	public AllAgentsManager am;
 
-    public float FollowPlayer = 30f;
+	private float bestDist;
 
 	void Start(){
+		bestDist = keepDist;
 		am = GameObject.Find("HumanAndMosterController").GetComponent<AllAgentsManager>();
 
 		human = GetComponent<NavMeshAgent>();
-		target = FindObjectOfType<PlayerController>();
-
+		mainTarget = GameObject.FindGameObjectWithTag("Player").transform;
+		target = mainTarget;
 		for(int i = 0; i < am.alliesSize; i++){
 			if(am.allies[i] == null){
 				am.allies[i] = this.gameObject;
@@ -28,27 +43,93 @@ public class HumanController : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-        
-        
-        human.SetDestination(target.transform.position);
-        
+		distToMain = Vector3.Distance(this.transform.position, mainTarget.position);
+
+		if(isDetected){
+			distToEnemy = Vector3.Distance(transform.position, target.transform.position);
+		} 
+
+		if(distToMain >= distToFollow || !isDetected){
+			human.SetDestination(mainTarget.transform.position);
+		} else {
+			if(distToEnemy <= keepDist){
+				human.SetDestination(mainTarget.transform.position);
+			}
+		}
+
+		if(isDetected){
+			this.transform.LookAt(target.transform.position);
+		}
 	}
 
-    void OnTriggerEnter(Collider other)
+	void OnTriggerStay(Collider other){
+		if(other.tag == "Enemy"){
+			float dist = Vector3.Distance(transform.position, other.transform.position);
+			if(dist <= bestDist){
+				bestDist = dist;
+				target = other.transform;
+				isDetected = true;
+			}
+			float testDist = Vector3.Distance(transform.position, target.position);
+			if(bestDist < testDist){
+				bestDist = keepDist;
+				isDetected = false;
+			}
+			Debug.Log(bestDist);
+		}
+	}
+
+
+    /*void OnTriggerEnter(Collider other)
     {
-        
-        if (other.tag == "Enemy" && !isDetected)
+        if (other.tag == "Enemy")
         {
-            isDetected = true;
-            //target = other.tranform.position;
-            Debug.Log(other.tag);
+			if(!isDetected){
+            	isDetected = true;
+            	target = other.transform;
+			}
+			EnemyCompetition(other.gameObject);
         }
     }
 
     void OnTriggerExit(Collider other){
 		if(other.tag == "Enemy"){
 			isDetected = false;
-            //target = FindObjectOfType<PlayerController>();
+           	//target = mainTarget;
+			bestDist = keepDist;
+			//EnemyCompetition(other.gameObject);
         }
+	}*/
+
+	void EnemyCompetition(GameObject target){
+		int test = 0;
+		for(int e = 0; e < enemiesList.Length; e++){
+			if(enemiesList[e] == target){
+				test = e;
+				target = CheckFeatures(test);
+				break;
+			} else {
+				if(enemiesList[e] != target && enemiesList[e] == null){
+					enemiesList[e] = target;
+					test = e;
+					target = CheckFeatures(test);
+					break;
+				}
+			}
+		}
+	}
+
+	private GameObject CheckFeatures(int test){
+		float bestDist = keepDist;
+		int bestTarget = 0;
+		for(int d = 0; d <= test; d++){
+			float dist = Vector3.Distance(transform.position, enemiesList[d].transform.position);
+			if(dist <= bestDist){
+				bestDist = dist;
+				bestTarget = d;
+			}
+		}
+
+		return enemiesList[bestTarget];
 	}
 }
