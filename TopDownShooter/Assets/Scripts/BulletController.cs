@@ -22,7 +22,7 @@ public class BulletController : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "Enemy"){
-			other.GetComponent<ZombieManager>().Hurt(damage);
+			//other.GetComponent<ZombieManager>().Hurt(damage);
 			Destroy(gameObject);
 		}
 	}
