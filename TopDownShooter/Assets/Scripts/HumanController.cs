@@ -148,9 +148,11 @@ public class HumanController : MonoBehaviour {
 			animator.SetFloat("Move", human.velocity.magnitude/Speed);
 		}
 
-		Debug.Log((human.velocity + transform.forward).normalized);
-		animator.SetFloat("ForBack", Vector3.forward.normalized.z / Speed);
-		animator.SetFloat("LeftRight", Vector3.forward.normalized.x / Speed);
+		//Debug.Log(transform.rotation.eulerAngles);
+		animator.SetFloat("ForBack", human.velocity.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+		+ human.velocity.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+		animator.SetFloat("LeftRight", human.velocity.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+		-  human.velocity.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) {
