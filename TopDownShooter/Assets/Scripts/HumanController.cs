@@ -63,6 +63,8 @@ public class HumanController : MonoBehaviour {
 
 	public GameObject mainShootPoint;
 
+	public Transform spine;
+
 	void Start(){
 		hm = GetComponent<HumanManager>();
 		animator = GetComponent<Animator>();
@@ -97,7 +99,7 @@ public class HumanController : MonoBehaviour {
 					shootLight.enabled = true;
 					PS_shoot.SetActive(true);
 					shotCounter = interval;
-					BulletController newBullet = Instantiate(bullet, firePoint.position, transform.rotation) as BulletController;
+					BulletController newBullet = Instantiate(bullet, firePoint.position, 	transform.rotation) as BulletController;
 					newBullet.speed = bulletSpeed;
 				}
 			} else {
@@ -146,9 +148,9 @@ public class HumanController : MonoBehaviour {
 			animator.SetFloat("Move", human.velocity.magnitude/Speed);
 		}
 
-
-		animator.SetFloat("ForBack", (human.velocity + transform.forward).normalized.z / Speed);
-		animator.SetFloat("LeftRight", (human.velocity - transform.right).normalized.x / Speed);
+		Debug.Log((human.velocity + transform.forward).normalized);
+		animator.SetFloat("ForBack", Vector3.forward.normalized.z / Speed);
+		animator.SetFloat("LeftRight", Vector3.forward.normalized.x / Speed);
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) {
@@ -236,9 +238,11 @@ public class HumanController : MonoBehaviour {
 	}
 
 	private void RotateTowards (Transform target) {
+		if(curTarget != null){
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 28f);
+		}
     }
 
 	Transform FindNearestStock(string stockTag){

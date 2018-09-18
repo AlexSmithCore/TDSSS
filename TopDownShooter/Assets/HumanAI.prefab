@@ -388,21 +388,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1699604368144716
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4960444026585188}
-  m_Layer: 0
-  m_Name: ShootPointMain
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1705495507979340
 GameObject:
   m_ObjectHideFlags: 1
@@ -685,14 +670,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705495507979340}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 0.243, z: 0.103}
+  m_LocalRotation: {x: -0.15304585, y: -0.6903456, z: -0.15304585, w: 0.6903456}
+  m_LocalPosition: {x: -0.117, y: 0.211, z: 0.174}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4678375472485822}
   m_Father: {fileID: 4280004510062940}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -25, y: -90, z: 0}
 --- !u!4 &4061039427199396
 Transform:
   m_ObjectHideFlags: 1
@@ -769,13 +754,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1989527736839766}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.203, y: -0, z: -0.055}
+  m_LocalRotation: {x: -0.13578902, y: -0.29327077, z: 0.6289294, w: 0.7071078}
+  m_LocalPosition: {x: -0, y: 0.103, z: 0.048}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4731965676946424}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.187, y: -36.508003, z: 79.935005}
 --- !u!4 &4219563885761196
 Transform:
   m_ObjectHideFlags: 1
@@ -923,12 +908,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1731869960353788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 127.53, y: -0.2843207, z: 144.83}
+  m_LocalPosition: {x: 125.25, y: 0, z: 130.27}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4089564032675500}
   - {fileID: 4719080585868198}
-  - {fileID: 4960444026585188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1063,14 +1047,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1930947442454576}
-  m_LocalRotation: {x: -0.1665411, y: -0.67489797, z: -0.24756232, w: 0.6748998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.103, y: 0.054, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4760353581431646}
   m_Father: {fileID: 4028406320148302}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -33.984, y: -87.68101, z: -7.5790005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4684951525473104
 Transform:
   m_ObjectHideFlags: 1
@@ -1255,19 +1239,6 @@ Transform:
   m_Father: {fileID: 4338062375204408}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4960444026585188
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1699604368144716}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4415455824048276}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23003308359737880
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1398,6 +1369,7 @@ MonoBehaviour:
   firePoint: {fileID: 4760353581431646}
   bullet: {fileID: 114756786725432646, guid: a943585eeff5de047bd57d61c0524fd3, type: 2}
   mainShootPoint: {fileID: 0}
+  spine: {fileID: 4747489422826140}
 --- !u!114 &114223962844177578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1410,7 +1382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hName: 
-  employment: 0
+  employment: 1
   hInv:
   - itemName: 
     itemID: 0
@@ -1519,7 +1491,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 4
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 25
   m_AngularSpeed: 220
@@ -1591,7 +1563,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1510613694
+  randomSeed: -1137902078
   InitialModule:
     serializedVersion: 3
     enabled: 1
