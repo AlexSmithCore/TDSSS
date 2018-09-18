@@ -20,6 +20,8 @@ public class HumanController : MonoBehaviour {
 	[SerializeField]
 	private bool isCuttingsTrees = false;
 
+	public bool isAim;
+
 	public Transform mainTarget;
 
 	public Transform curTarget;
@@ -57,13 +59,20 @@ public class HumanController : MonoBehaviour {
 	
 	void FixedUpdate(){
 		if((int)hm.employment == 1){
+
+//Warrior
+
 			if(isDetected){
 				RotateTowards(curTarget);
 			}
 
 			human.SetDestination(mainTarget.transform.position);
+			isAim = isDetected;
 
 			} else if((int)hm.employment == 2) {
+
+// WoodChopper
+
 				if(!isWorking){
 					if(!checkForWork){
 						StartCoroutine(WorkCheckDelay(1));
@@ -87,7 +96,9 @@ public class HumanController : MonoBehaviour {
 					}
 				}
 			} else {
-			//Nothing
+
+//Nothing
+
 		}
 
 		// Animator

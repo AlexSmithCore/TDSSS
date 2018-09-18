@@ -32,7 +32,15 @@ public class GameController : MonoBehaviour {
 			anim.SetTrigger("FadeOut");
 		}
 
-		if(Input.GetKeyDown(KeyCode.Escape)){ isPause = !isPause; }
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			isPause = !isPause;
+
+			if(isPause){
+				Time.timeScale = 0f;
+			} else {
+				Time.timeScale = 1f;
+			}
+		}
 		Cursor.visible = isPause;
 		pauseUI.SetActive(isPause);
 		cursor.gameObject.SetActive(!isPause);
