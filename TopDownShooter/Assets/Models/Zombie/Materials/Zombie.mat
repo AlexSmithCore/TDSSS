@@ -83,9 +83,9 @@ Material:
     - _Emission: 1
     - _EnableExternalAlpha: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.381
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _Metallic: 0.799
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
