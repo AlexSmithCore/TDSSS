@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Mathf.Sin(2 * Mathf.PI * Freq * Time.time) > 0.999f){
+		if (Mathf.Sin(2 * Mathf.PI * Freq * Time.time + point) > 0.999f){
 			point = Random.Range(0, vertices.Length);
 			enemy.SetDestination(vertices[point]);
 		}
