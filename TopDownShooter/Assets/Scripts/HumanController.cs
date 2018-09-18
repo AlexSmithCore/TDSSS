@@ -46,6 +46,22 @@ public class HumanController : MonoBehaviour {
 	private NavMeshAgent human;
 	private Animator animator;
 
+	public Light shootLight;
+
+	public GameObject PS_shoot;
+
+	
+	public float bulletSpeed;
+
+	public float interval;
+
+	float shotCounter;
+
+	public Transform firePoint;
+
+	public BulletController bullet;
+
+	public GameObject mainShootPoint;
 
 	void Start(){
 		hm = GetComponent<HumanManager>();
@@ -58,6 +74,7 @@ public class HumanController : MonoBehaviour {
 
 	
 	void FixedUpdate(){
+
 		if((int)hm.employment == 1){
 
 //Warrior
@@ -68,6 +85,26 @@ public class HumanController : MonoBehaviour {
 
 			human.SetDestination(mainTarget.transform.position);
 			isAim = isDetected;
+
+			/*if(!isShoot && isAim){
+				StartCoroutine(CheckForShoot());
+			}*/
+
+			if(isAim){
+				//mainShootPoint.transform.position = firePoint.transform.position;
+				shotCounter -= Time.deltaTime;
+				if(shotCounter <= 0){
+					shootLight.enabled = true;
+					PS_shoot.SetActive(true);
+					shotCounter = interval;
+					BulletController newBullet = Instantiate(bullet, firePoint.position, transform.rotation) as BulletController;
+					newBullet.speed = bulletSpeed;
+				}
+			} else {
+				PS_shoot.SetActive(false);
+				shootLight.enabled = false;
+				shotCounter = 0;
+			}
 
 			} else if((int)hm.employment == 2) {
 
@@ -108,6 +145,10 @@ public class HumanController : MonoBehaviour {
 		else{
 			animator.SetFloat("Move", human.velocity.magnitude/Speed);
 		}
+
+
+		animator.SetFloat("ForBack", (human.velocity + transform.forward).normalized.z / Speed);
+		animator.SetFloat("LeftRight", (human.velocity - transform.right).normalized.x / Speed);
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) {
@@ -197,7 +238,7 @@ public class HumanController : MonoBehaviour {
 	private void RotateTowards (Transform target) {
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 8);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 28f);
     }
 
 	Transform FindNearestStock(string stockTag){
