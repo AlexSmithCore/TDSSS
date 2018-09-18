@@ -9,6 +9,8 @@ TagManager:
   - Melee
   - ZombieHand
   - HotObject
+  - Tree
+  - WoodStock
   layers:
   - Default
   - TransparentFX

@@ -351,6 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4415455824048276}
   - component: {fileID: 95123790598498548}
+  - component: {fileID: 114223962844177578}
   - component: {fileID: 114028377774866916}
   - component: {fileID: 195591757700762424}
   m_Layer: 0
@@ -1058,38 +1059,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5397b8711ea5b9478dcaff02059b4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hSpeed: 0
   isDetected: 0
-  unitName: 
   mainTarget: {fileID: 0}
-  distToFollow: 12
+  curTarget: {fileID: 0}
   Speed: 1
   viewRadius: 12
   viewAngle: 145
   targetMask:
     serializedVersion: 2
-    m_Bits: 4352
+    m_Bits: 4096
   obstacleMask:
     serializedVersion: 2
     m_Bits: 2048
   visibleTargets: []
-  unitNameObj: {fileID: 1540922142603026, guid: 2ae9fd7e4defd074dbce7ae1a588eba4,
-    type: 2}
-  names:
-  - Philip
-  - Edward
-  - Cyrus
-  - Naum
-  - Gregory
-  - Maximilian
-  - Luke
-  - Vseslav
-  - Antype
-  - Agap
-  - Benjamin
-  - Athanasius
-  - Yaroslav
-  - Nikolai
-  - Dementy
+--- !u!114 &114223962844177578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1731869960353788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38e2457f5798b4440870f69207f93d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  employment: 1
 --- !u!137 &137658109616094774
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1176,8 +1171,8 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 99
-  m_AngularSpeed: 120
-  m_StoppingDistance: 4
+  m_AngularSpeed: 180
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
