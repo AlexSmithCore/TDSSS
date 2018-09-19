@@ -4,14 +4,29 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
+	private bool isHit;
+
 	public float speed;
 
 	public float lifeTime;
 
 	public int damage;
 
+	public GameObject ps_blood;
+	private Collider col;
+	private MeshRenderer mr;
+
+	void Awake(){
+		//ps_blood = transform.GetChild(0).gameObject;
+		ps_blood.SetActive(false);
+		col = GetComponent<Collider>();
+		mr = GetComponent<MeshRenderer>();
+	}
+
 	void Update(){
-		transform.Translate(Vector3.forward * speed * Time.deltaTime);
+		if(!isHit){
+			transform.Translate(Vector3.forward * speed * Time.deltaTime);
+		}
 	
 		lifeTime -=Time.deltaTime;
 		if(lifeTime <= 0){
@@ -22,8 +37,18 @@ public class BulletController : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "Enemy"){
+			isHit = true;
 			other.GetComponent<EnemyManager>().Hurt(damage);
-			Destroy(gameObject);
+			ps_blood.SetActive(true);
+			col.enabled = false;
+			mr.enabled = false;
+			Debug.Log(ps_blood.activeInHierarchy + " " + col.enabled + " " + mr.enabled);
+			//StartCoroutine(Destroy());
 		}
+	}
+
+	IEnumerator Destroy(){
+		yield return new WaitForSeconds(2f);
+		Destroy(gameObject);
 	}
 }
