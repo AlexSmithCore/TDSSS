@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour {
 
 	private Vector3 _inputs = Vector3.zero;
+	private Vector3 pointToLook;
 	Rigidbody rb;
 	Animator animator;
 	Camera mainCamera;
@@ -18,31 +19,36 @@ public class PlayerControl : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		animator = GetComponent<Animator>();
 		mainCamera = FindObjectOfType<Camera>();
+
+		pointToLook = Vector3.zero;
 	}
 
 	void Update()
 	{
-		 _inputs = Vector3.zero;
-        _inputs.x = Input.GetAxis("Horizontal");
-        _inputs.z = Input.GetAxis("Vertical");
-		
-		//animator.Play("Base", 0);
-		animator.SetFloat("Move", _inputs.magnitude);
-		//animator.SetFloat("BackFor", _inputs.z);
-		//animator.SetFloat("LeftRight", _inputs.x);
-
-		animator.SetFloat("ForBack", + _inputs.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
-		+ _inputs.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-		animator.SetFloat("LeftRight", _inputs.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
-		-  _inputs.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-
 		Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
 		Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 		float rayLenght;
 		if(groundPlane.Raycast(cameraRay, out rayLenght)){
-			Vector3 pointToLook = cameraRay.GetPoint(rayLenght);
-			transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+			pointToLook = cameraRay.GetPoint(rayLenght);
+			pointToLook.Set(pointToLook.x, transform.position.y, pointToLook.z);
+			transform.LookAt(pointToLook);
 		}
+
+		_inputs = Vector3.zero;
+        _inputs.x = Input.GetAxis("Horizontal");
+        _inputs.z = Input.GetAxis("Vertical");
+		
+		//animator.Play("Base", 0);
+		animator.SetFloat("Move", _inputs.normalized.magnitude);
+		//animator.SetFloat("BackFor", _inputs.z);
+		//animator.SetFloat("LeftRight", _inputs.x);
+
+		animator.SetFloat("BackFor", + _inputs.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+		+ _inputs.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+		animator.SetFloat("LeftRight", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+		- _inputs.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+
+		
 	}
 	
 	void FixedUpdate()
