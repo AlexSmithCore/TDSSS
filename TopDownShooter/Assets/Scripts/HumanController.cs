@@ -66,6 +66,8 @@ public class HumanController : MonoBehaviour {
 	public Transform spine;
 
 	void Start(){
+		PS_shoot.SetActive(false);
+		shootLight.enabled = false;
 		hm = GetComponent<HumanManager>();
 		animator = GetComponent<Animator>();
 		human = GetComponent<NavMeshAgent>();
@@ -98,13 +100,12 @@ public class HumanController : MonoBehaviour {
 				if(shotCounter <= 0){
 					shootLight.enabled = true;
 					PS_shoot.SetActive(true);
+					Invoke("ShootEffect", .1f);
 					shotCounter = interval;
-					BulletController newBullet = Instantiate(bullet, firePoint.position, 	transform.rotation) as BulletController;
+					BulletController newBullet = Instantiate(bullet, firePoint.position, transform.rotation) as BulletController;
 					newBullet.speed = bulletSpeed;
 				}
 			} else {
-				PS_shoot.SetActive(false);
-				shootLight.enabled = false;
 				shotCounter = 0;
 			}
 
@@ -155,6 +156,11 @@ public class HumanController : MonoBehaviour {
 		-  human.velocity.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 	}
 
+	void ShootEffect(){
+		PS_shoot.SetActive(false);
+		shootLight.enabled = false;
+	}
+
 	IEnumerator FindTargetsWithDelay(float delay) {
 		while (true) {
 			yield return new WaitForSeconds (delay);
@@ -201,23 +207,25 @@ public class HumanController : MonoBehaviour {
 	 	return trees[m].transform;
 	}
 
-	void FindVisibleTargets() {
+	public void FindVisibleTargets() {
 		visibleTargets.Clear ();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
-		if(targetsInViewRadius.Length > 0){
+		int count = 0;
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			Transform target = targetsInViewRadius [i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
 			if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) {
 				float dstToTarget = Vector3.Distance (transform.position, target.position);
-				if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask) && target.tag == "Enemy") {
+				if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
+					count++;
 					visibleTargets.Add (target);
 					curTarget = GetClosestGO(transform.position,targetsInViewRadius);
 					isDetected = true;
 				}
 			}
 		}
-		} else {
+
+		if(count == 0){
 			isDetected = false;
 		}
 	}
@@ -243,7 +251,7 @@ public class HumanController : MonoBehaviour {
 		if(curTarget != null){
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 28f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 24f);
 		}
     }
 

@@ -21,7 +21,6 @@ public class BulletController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("Test!");
 		if(other.tag == "Enemy"){
 			other.GetComponent<EnemyManager>().Hurt(damage);
 			Destroy(gameObject);
