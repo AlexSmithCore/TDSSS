@@ -13,11 +13,16 @@ public class EnemyController : MonoBehaviour {
 	private NavMeshAgent enemy;
 	private Animator animator;
 	private Vector3[] vertices;
+	private EnemyManager em;
+
+	private Collider coll;
 
 
 	void Start () {
 		animator = GetComponent<Animator>();
 		enemy = GetComponent<NavMeshAgent>();
+		em = GetComponent<EnemyManager>();
+		coll = GetComponent<Collider>();
 
 		NavMeshTriangulation triangulatedNavMesh = NavMesh.CalculateTriangulation();
         vertices = triangulatedNavMesh.vertices;
@@ -28,15 +33,25 @@ public class EnemyController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f){
-			point = Random.Range(0, vertices.Length);
-			enemy.SetDestination(vertices[point]);
-		}
-		if (enemy.velocity.magnitude >= speed || enemy.velocity.magnitude < 0){
-			animator.SetFloat("Move", 1f);
+	
+		if (em.health <= 0){
+			em.Invoke("Death", 2.1f);
+			enemy.isStopped = true;
+			coll.enabled = false;
+			animator.Play("Death", 0);
 		}
 		else{
-			animator.SetFloat("Move", enemy.velocity.magnitude/speed);
+			animator.Play("Base", 0);
+			if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f){
+				point = Random.Range(0, vertices.Length);
+				enemy.SetDestination(vertices[point]);
+			}
+			if (enemy.velocity.magnitude >= speed || enemy.velocity.magnitude < 0){
+				animator.SetFloat("Move", 1f);
+			}
+			else{
+				animator.SetFloat("Move", enemy.velocity.magnitude/speed);
+			}
 		}
 	}
 }
