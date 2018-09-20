@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 33490277699167022}
   - component: {fileID: 135972663534169190}
   - component: {fileID: 23263718543911858}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 4006311802838262}
   - component: {fileID: 198449749197262678}
   - component: {fileID: 199486806481292464}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1873,6 +1873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7186c51c66087d438f8ef06b8f317d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   point: 0
   freq: 0.1
   speed: 4

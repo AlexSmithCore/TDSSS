@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
 
+	public bool isDead;
+
 	[SerializeField]	
 	private int point;
 	[SerializeField]
@@ -33,8 +35,8 @@ public class EnemyController : MonoBehaviour {
 	}
 	
 	void Update () {
-	
 		if (em.health <= 0){
+			isDead = true;
 			em.Invoke("Death", 2.1f);
 			enemy.isStopped = true;
 			coll.enabled = false;

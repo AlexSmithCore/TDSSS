@@ -1383,8 +1383,8 @@ MonoBehaviour:
   mainTarget: {fileID: 0}
   curTarget: {fileID: 0}
   Speed: 1
-  viewRadius: 12
-  viewAngle: 145
+  viewRadius: 16
+  viewAngle: 155
   targetMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -1398,7 +1398,7 @@ MonoBehaviour:
   interval: 0.5
   firePoint: {fileID: 4363753272472754}
   bullet: {fileID: 114756786725432646, guid: a943585eeff5de047bd57d61c0524fd3, type: 2}
-  distToEnemy: 4
+  distToEnemy: 8
   retreatPoint: {fileID: 1068719282499636}
 --- !u!114 &114223962844177578
 MonoBehaviour:

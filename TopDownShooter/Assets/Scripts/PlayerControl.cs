@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public float playerSpeed;
 
-
+	public Transform firePoint;
 
 	void Start()
 	{
@@ -31,6 +31,7 @@ public class PlayerControl : MonoBehaviour {
 		if(groundPlane.Raycast(cameraRay, out rayLenght)){
 			pointToLook = cameraRay.GetPoint(rayLenght);
 			pointToLook.Set(pointToLook.x, transform.position.y, pointToLook.z);
+            //transform.rotation = RotateTowards(pointToLook);
 			transform.LookAt(pointToLook);
 		}
 
@@ -55,4 +56,10 @@ public class PlayerControl : MonoBehaviour {
 	{
 		rb.MovePosition(rb.position + _inputs * playerSpeed * Time.fixedDeltaTime);
 	}
+
+	/*private Quaternion RotateTowards (Vector3 target) {
+            Vector3 direction = (target - firePoint.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+           	return Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 24f);
+    }*/
 }

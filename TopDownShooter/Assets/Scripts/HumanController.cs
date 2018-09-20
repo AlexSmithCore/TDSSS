@@ -101,7 +101,6 @@ public class HumanController : MonoBehaviour {
 
 			human.SetDestination(curTarget.transform.position);
 
-
 			isAim = isDetected;
 
 			if(isAim && enemyTarget != null){
@@ -110,7 +109,7 @@ public class HumanController : MonoBehaviour {
 					shootLight.enabled = true;
 					PS_shoot.SetActive(true);
 					Invoke("ShootEffect", .1f);
-					shotCounter = interval;
+					shotCounter = interval - Random.Range(0f,0.2f);
 					BulletController newBullet = Instantiate(bullet, firePoint.position, transform.rotation) as BulletController;
 					newBullet.speed = bulletSpeed;
 				}
@@ -229,7 +228,7 @@ public class HumanController : MonoBehaviour {
 					count++;
 					visibleTargets.Add (target);
 					enemyTarget = GetClosestGO(transform.position,targetsInViewRadius);
-					isDetected = true;
+					isDetected = !enemyTarget.GetComponent<EnemyController>().isDead;
 				}
 			}
 		}
@@ -258,9 +257,9 @@ public class HumanController : MonoBehaviour {
 
 	private void RotateTowards (Transform target) {
 		if(enemyTarget != null){
-            Vector3 direction = (target.position - transform.position).normalized;
+            Vector3 direction = (target.position - firePoint.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 24f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 12f);
 		}
     }
 
