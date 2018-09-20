@@ -14,7 +14,6 @@ public class StockManager : MonoBehaviour {
 	public int resourcesCount;
 
 	public void AddToStock(Transform worker, int count){
-		Debug.Log("Items added to stock!");
 		resourcesCount+=count;
 		worker.GetComponent<HumanManager>().DeleteItems(1, count);
 	}

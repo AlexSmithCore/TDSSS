@@ -42,7 +42,6 @@ public class BulletController : MonoBehaviour {
 			ps_blood.SetActive(true);
 			col.enabled = false;
 			mr.enabled = false;
-			Debug.Log(ps_blood.activeInHierarchy + " " + col.enabled + " " + mr.enabled);
 			//StartCoroutine(Destroy());
 		}
 	}

@@ -22,6 +22,8 @@ public class HumanController : MonoBehaviour {
 
 	public bool isAim;
 
+	public Transform enemyTarget;
+
 	public Transform mainTarget;
 
 	public Transform curTarget;
@@ -61,9 +63,9 @@ public class HumanController : MonoBehaviour {
 
 	public BulletController bullet;
 
-	public GameObject mainShootPoint;
+	public float distToEnemy;
 
-	public Transform spine;
+	public GameObject retreatPoint;
 
 	void Start(){
 		PS_shoot.SetActive(false);
@@ -83,19 +85,26 @@ public class HumanController : MonoBehaviour {
 
 //Warrior
 
-			if(isDetected){
-				RotateTowards(curTarget);
+			if(isDetected && enemyTarget != null){
+				RotateTowards(enemyTarget);
+				if ((transform.position - enemyTarget.transform.position).magnitude <= distToEnemy){
+					Vector3 retreatPointMathf = transform.position + (transform.position - enemyTarget.transform.position).normalized * distToEnemy;
+					retreatPointMathf.y = 0;
+					retreatPoint.transform.position = retreatPointMathf;
+					curTarget = retreatPoint.transform;
+				} else {
+					curTarget = mainTarget;
+				}
+			} else {
+				curTarget = mainTarget;
 			}
 
-			human.SetDestination(mainTarget.transform.position);
+			human.SetDestination(curTarget.transform.position);
+
+
 			isAim = isDetected;
 
-			/*if(!isShoot && isAim){
-				StartCoroutine(CheckForShoot());
-			}*/
-
-			if(isAim){
-				//mainShootPoint.transform.position = firePoint.transform.position;
+			if(isAim && enemyTarget != null){
 				shotCounter -= Time.deltaTime;
 				if(shotCounter <= 0){
 					shootLight.enabled = true;
@@ -181,10 +190,10 @@ public class HumanController : MonoBehaviour {
 	}
 
 	IEnumerator CuttingsTrees(){
-		Debug.Log("Starting Cutting!");
+// Start cutting tree
 		isCuttingsTrees = true;
 		yield return new WaitForSeconds(2f);
-		print("Wood added!");
+// Wood added
 		hm.AddItem(1,1);
 		goToStock = hm.IsItemsWeHave(1,5);
 		if(!goToStock){
@@ -203,7 +212,7 @@ public class HumanController : MonoBehaviour {
   				m = i;
 			}
 		}
-		Debug.Log("Tree Founded!");
+// Tree Founded!
 	 	return trees[m].transform;
 	}
 
@@ -219,7 +228,7 @@ public class HumanController : MonoBehaviour {
 				if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
 					count++;
 					visibleTargets.Add (target);
-					curTarget = GetClosestGO(transform.position,targetsInViewRadius);
+					enemyTarget = GetClosestGO(transform.position,targetsInViewRadius);
 					isDetected = true;
 				}
 			}
@@ -248,7 +257,7 @@ public class HumanController : MonoBehaviour {
 	}
 
 	private void RotateTowards (Transform target) {
-		if(curTarget != null){
+		if(enemyTarget != null){
             Vector3 direction = (target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 24f);
