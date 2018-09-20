@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12706593, g: 0.13378122, b: 0.12056461, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -12108,7 +12108,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1188195871
+  randomSeed: 718866958
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -27158,6 +27158,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 136305395307559038, guid: d2e2fad13a6316644849ed16047bf3bf,
+        type: 2}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 54926380298193518, guid: d2e2fad13a6316644849ed16047bf3bf,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2e2fad13a6316644849ed16047bf3bf, type: 2}
   m_IsPrefabParent: 0
@@ -40112,22 +40122,6 @@ Prefab:
       propertyPath: m_Name
       value: Tree (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 4561426102587054, guid: debd6573459ff3244aab057cfa7e0fff, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4561426102587054, guid: debd6573459ff3244aab057cfa7e0fff, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533916016480012, guid: debd6573459ff3244aab057cfa7e0fff, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1533916016480012, guid: debd6573459ff3244aab057cfa7e0fff, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: debd6573459ff3244aab057cfa7e0fff, type: 2}
   m_IsPrefabParent: 0
@@ -40548,7 +40542,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1916173384
+  randomSeed: -1702003421
   InitialModule:
     serializedVersion: 3
     enabled: 1

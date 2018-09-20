@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33083962264255776}
   - component: {fileID: 23059554543940394}
   - component: {fileID: 65283700786959202}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree 1
   m_TagString: Tree
   m_Icon: {fileID: 0}
@@ -35,8 +35,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533916016480012}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 143.39003, y: 0.118283406, z: 144.65097}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 138.39, y: 0.118283406, z: 153.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0b9033c28fa1fae45b16a4db36fd6ca7, type: 3}
+  - {fileID: 2100000, guid: 31b29afa7a127814c9fbb4027506ce89, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
