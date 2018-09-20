@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 114223962844177578}
   - component: {fileID: 114028377774866916}
   - component: {fileID: 195591757700762424}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: HumanAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1412,7 +1412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hName: 
-  employment: 1
+  employment: 0
   hInv:
   - itemName: 
     itemID: 0

@@ -14,6 +14,10 @@ public class PlayerControl : MonoBehaviour {
 
 	public Transform firePoint;
 
+	public int[] simple;
+
+	public string[] itemName;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -49,7 +53,20 @@ public class PlayerControl : MonoBehaviour {
 		animator.SetFloat("LeftRight", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
 		- _inputs.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 
-		
+		if(Input.GetKeyDown(KeyCode.R)){
+			float result = 0;
+			int greatest = 0;
+			float rand = Random.Range(11f, 142f);
+			for(int i = 0; i < simple.Length; i++){
+				result = rand / simple[i]; 
+				if (result - Mathf.Floor(result) == 0) 
+				{ 
+					greatest = i; 
+				}
+			}
+
+			Debug.Log("Выпало: " + itemName[greatest]);
+		}
 	}
 	
 	void FixedUpdate()

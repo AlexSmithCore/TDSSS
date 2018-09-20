@@ -3,8 +3,6 @@ using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 
-using UnityEngine.UI;
-
 public class HumanController : MonoBehaviour {
 
 	[Header("Characteristics")]
@@ -84,7 +82,6 @@ public class HumanController : MonoBehaviour {
 		if((int)hm.employment == 1){
 
 //Warrior
-
 			if(isDetected && enemyTarget != null){
 				RotateTowards(enemyTarget);
 				if ((transform.position - enemyTarget.transform.position).magnitude <= distToEnemy){
@@ -216,6 +213,7 @@ public class HumanController : MonoBehaviour {
 	}
 
 	public void FindVisibleTargets() {
+		if((int)hm.employment == 1){
 		visibleTargets.Clear ();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
 		int count = 0;
@@ -235,6 +233,7 @@ public class HumanController : MonoBehaviour {
 
 		if(count == 0){
 			isDetected = false;
+		}
 		}
 	}
 

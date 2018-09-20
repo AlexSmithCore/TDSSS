@@ -44,6 +44,10 @@ public class BulletController : MonoBehaviour {
 			mr.enabled = false;
 			//StartCoroutine(Destroy());
 		}
+
+		if(other.tag == "DestroyBullet"){
+			Destroy(gameObject);
+		}
 	}
 
 	IEnumerator Destroy(){
