@@ -65,6 +65,11 @@ public class HumanController : MonoBehaviour {
 
 	public GameObject retreatPoint;
 
+	public GameObject sleevesPoint;
+	public GameObject sleeve;
+
+	public float spreadSize;
+
 	void Start(){
 		PS_shoot.SetActive(false);
 		shootLight.enabled = false;
@@ -106,9 +111,16 @@ public class HumanController : MonoBehaviour {
 					shootLight.enabled = true;
 					PS_shoot.SetActive(true);
 					Invoke("ShootEffect", .1f);
-					shotCounter = interval - Random.Range(0f,0.2f);
-					BulletController newBullet = Instantiate(bullet, firePoint.position, transform.rotation) as BulletController;
+					shotCounter = interval - Random.Range(0f,0.3f);
+					float xSpread = Random.Range(-1, 1);
+					float ySpread = Random.Range(-1, 1);
+					//normalize the spread vector to keep it conical
+					Vector3 spread = new Vector3(xSpread, ySpread, 0.0f).normalized * spreadSize;
+					Quaternion rotation = Quaternion.Euler(spread) * transform.rotation;
+					BulletController newBullet = Instantiate(bullet, firePoint.position, rotation) as BulletController;
 					newBullet.speed = bulletSpeed;
+					GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
+					newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
 				}
 			} else {
 				shotCounter = 0;

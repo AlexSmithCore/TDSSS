@@ -56,7 +56,7 @@ public class PlayerControl : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.R)){
 			float result = 0;
 			int greatest = 0;
-			float rand = Random.Range(11f, 142f);
+			float rand = (float)Random.Range(11, 53);
 			for(int i = 0; i < simple.Length; i++){
 				result = rand / simple[i]; 
 				if (result - Mathf.Floor(result) == 0) 
