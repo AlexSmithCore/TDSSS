@@ -441,6 +441,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1560285921797568
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4285566708983766}
+  m_Layer: 0
+  m_Name: sleevePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1571198167657762
 GameObject:
   m_ObjectHideFlags: 1
@@ -777,6 +792,19 @@ Transform:
   m_Father: {fileID: 4398467562646248}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4285566708983766
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1560285921797568}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.15, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4501447718225166}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4290823337436118
 Transform:
   m_ObjectHideFlags: 1
@@ -941,6 +969,7 @@ Transform:
   m_Children:
   - {fileID: 4862806030630222}
   - {fileID: 4957128870699302}
+  - {fileID: 4285566708983766}
   m_Father: {fileID: 4522943675836646}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1359,8 +1388,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71158ef633b702f43ba83f891d722143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 3
+  isAim: 0
+  isShooting: 0
+  bullet: {fileID: 114756786725432646, guid: a943585eeff5de047bd57d61c0524fd3, type: 2}
+  bulletSpeed: 50
+  interval: 0.5
   firePoint: {fileID: 4957128870699302}
+  shootLight: {fileID: 108998317802408900}
+  PS_shoot: {fileID: 1905304635008490}
+  playerSpeed: 3.5
+  walkSpeed: 3.5
   simple: 01000000020000000b0000000d0000001100000013000000170000001d0000001f00000025000000
   itemName:
   - "\u041F\u0443\u0441\u0442\u043E"
@@ -1374,6 +1411,9 @@ MonoBehaviour:
   - "\u041B\u0438\u043C\u043E\u043D\u0430\u0434"
   - "\u041A\u0443\u0441\u043E\u043A \u0436\u0430\u0440\u0435\u043D\u043D\u043E\u0433\u043E
     \u043C\u044F\u0441\u0430"
+  sleevesPoint: {fileID: 1560285921797568}
+  sleeve: {fileID: 1175407696471438, guid: 0ab8096ea427fac4ca06ca9b1c48f293, type: 2}
+  spreadSize: 2
 --- !u!136 &136305395307559038
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1383,7 +1423,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.6
+  m_Radius: 0.35
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}

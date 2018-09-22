@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 114223962844177578}
   - component: {fileID: 114028377774866916}
   - component: {fileID: 195591757700762424}
+  - component: {fileID: 136094154450738502}
   m_Layer: 13
   m_Name: HumanAI
   m_TagString: Untagged
@@ -1431,7 +1432,7 @@ MonoBehaviour:
   retreatPoint: {fileID: 1068719282499636}
   sleevesPoint: {fileID: 1079247319395762}
   sleeve: {fileID: 1175407696471438, guid: 0ab8096ea427fac4ca06ca9b1c48f293, type: 2}
-  ConeSize: 2
+  spreadSize: 0.5
 --- !u!114 &114223962844177578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1470,6 +1471,19 @@ MonoBehaviour:
   - itemName: 
     itemID: 0
     itemCount: 0
+--- !u!136 &136094154450738502
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1731869960353788}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.35
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!137 &137658109616094774
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1553,7 +1567,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3
+  m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 25
   m_AngularSpeed: 220

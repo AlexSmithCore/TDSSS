@@ -12,6 +12,8 @@ public class BulletController : MonoBehaviour {
 
 	public int damage;
 
+	public Transform parent;
+
 	public GameObject ps_blood;
 	private Collider col;
 	private MeshRenderer mr;
@@ -38,11 +40,10 @@ public class BulletController : MonoBehaviour {
 	{
 		if(other.tag == "Enemy"){
 			isHit = true;
-			other.GetComponent<EnemyManager>().Hurt(damage);
+			other.GetComponent<EnemyManager>().Hurt(damage, parent);
 			ps_blood.SetActive(true);
 			col.enabled = false;
 			mr.enabled = false;
-			//StartCoroutine(Destroy());
 		}
 
 		if(other.tag == "DestroyBullet"){

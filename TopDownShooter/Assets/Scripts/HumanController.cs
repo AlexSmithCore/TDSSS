@@ -119,6 +119,7 @@ public class HumanController : MonoBehaviour {
 					Quaternion rotation = Quaternion.Euler(spread) * transform.rotation;
 					BulletController newBullet = Instantiate(bullet, firePoint.position, rotation) as BulletController;
 					newBullet.speed = bulletSpeed;
+					newBullet.parent = transform;
 					GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
 					newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
 				}

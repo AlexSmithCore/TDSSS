@@ -51,9 +51,10 @@ public class EnemyController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(isDetected){
+		if(isDetected && !isDead){
 			curTarget = enemyTarget;
 			RotateTowards(curTarget);
+			enemy.SetDestination(curTarget.transform.position);
 		}
 
 		if (em.health <= 0){
@@ -64,7 +65,7 @@ public class EnemyController : MonoBehaviour {
 			animator.Play("Death", 0);
 		} else {
 			animator.Play("Base", 0);
-			if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f){
+			if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f && !isDetected){
 				point = Random.Range(0, vertices.Length);
 				enemy.SetDestination(vertices[point]);
 			}

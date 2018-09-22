@@ -10,22 +10,25 @@ public class CameraMovement : MonoBehaviour {
 
 	public float smooth;
 	public Vector3 offSet;
+	private Vector3 startOffset;
 
 	Camera thisCam;
 
 	Vector3 sumOfVectors;
 
-	//ShootingScript ss;
+	PlayerControl pc;
 
 	private Vector3 velocity = Vector3.zero;
 
 	void Start(){
 		thisCam = GetComponent<Camera>();
-		//ss = target.GetComponent<ShootingScript>();
+		pc = target.GetComponent<PlayerControl>();
+
 	}
 
 	void FixedUpdate(){
-		/*if(ss.aim){
+
+		if(pc.isAim){
 			Ray cameraRay = thisCam.ScreenPointToRay(Input.mousePosition);
 			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 			float rayLenght;
@@ -36,8 +39,7 @@ public class CameraMovement : MonoBehaviour {
 			}
 		} else {
 			intermediatePoint.position = target.position;
-		}*/
-		intermediatePoint.position = target.position;
+		}
 		Vector3 desiredPosition = intermediatePoint.position + offSet;
 		transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smooth);
 	}

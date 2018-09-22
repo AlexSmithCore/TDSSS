@@ -4868,7 +4868,7 @@ Prefab:
     - target: {fileID: 114223962844177578, guid: 87797dcb8539c164783e2ab8360b0988,
         type: 2}
       propertyPath: employment
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1731869960353788, guid: 87797dcb8539c164783e2ab8360b0988, type: 2}
       propertyPath: m_Layer
@@ -9298,7 +9298,7 @@ Prefab:
     - target: {fileID: 114223962844177578, guid: 87797dcb8539c164783e2ab8360b0988,
         type: 2}
       propertyPath: employment
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87797dcb8539c164783e2ab8360b0988, type: 2}
@@ -20116,7 +20116,7 @@ Prefab:
     - target: {fileID: 114223962844177578, guid: 87797dcb8539c164783e2ab8360b0988,
         type: 2}
       propertyPath: employment
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1731869960353788, guid: 87797dcb8539c164783e2ab8360b0988, type: 2}
       propertyPath: m_Layer
@@ -21183,7 +21183,7 @@ Prefab:
     - target: {fileID: 114223962844177578, guid: 87797dcb8539c164783e2ab8360b0988,
         type: 2}
       propertyPath: employment
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1731869960353788, guid: 87797dcb8539c164783e2ab8360b0988, type: 2}
       propertyPath: m_Layer
@@ -22015,8 +22015,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1568819177}
   intermediatePoint: {fileID: 1732073851}
-  smooth: 0.4
-  offSet: {x: 0, y: 12, z: -9}
+  smooth: 0.5
+  offSet: {x: 0, y: 12, z: -8}
 --- !u!114 &1323727398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34202,7 +34202,7 @@ Prefab:
     - target: {fileID: 114223962844177578, guid: 87797dcb8539c164783e2ab8360b0988,
         type: 2}
       propertyPath: employment
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1731869960353788, guid: 87797dcb8539c164783e2ab8360b0988, type: 2}
       propertyPath: m_Layer
@@ -34307,7 +34307,7 @@ Prefab:
     - target: {fileID: 114223962844177578, guid: 87797dcb8539c164783e2ab8360b0988,
         type: 2}
       propertyPath: employment
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1731869960353788, guid: 87797dcb8539c164783e2ab8360b0988, type: 2}
       propertyPath: m_Layer

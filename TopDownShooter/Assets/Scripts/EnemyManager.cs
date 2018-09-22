@@ -6,11 +6,12 @@ public class EnemyManager : MonoBehaviour {
 
 	public int health = 100;
 
-	public Transform attackedBy;
-
 	private Animator animator;
 
+	public EnemyController ec;
+
 	void Start(){
+		ec = GetComponent<EnemyController>();
 	}
  
 	void Update(){
@@ -18,8 +19,12 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
-	public void Hurt(int damage){
+	public void Hurt(int damage, Transform hittedBy){
 		health-= damage;
+		if(!ec.isDetected){
+			ec.enemyTarget = hittedBy;
+			ec.isDetected = true;
+		}
 	}
 
 	public void Death(){
