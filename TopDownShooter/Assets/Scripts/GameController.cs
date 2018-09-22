@@ -8,6 +8,10 @@ public class GameController : MonoBehaviour {
 
 	public bool isPause;
 
+	public Transform player;
+
+	public Camera cam;
+
 	public GameObject deadUI;
 	public GameObject gameUI;
 
@@ -18,6 +22,18 @@ public class GameController : MonoBehaviour {
 	public Image cursor;
 
 	public GameObject pauseUI;
+
+	public float numberOfPixelsNorthToNorth;
+	public Transform compas;
+	Vector3 startPosition;
+    float rationAngleToPixel;
+
+	void Start(){
+		cam = FindObjectOfType<Camera>();
+
+		startPosition = compas.transform.position;
+        rationAngleToPixel = numberOfPixelsNorthToNorth / 360f;
+	}
 
 	void Update () {
 		if(!isPause){
@@ -41,6 +57,11 @@ public class GameController : MonoBehaviour {
 				Time.timeScale = 1f;
 			}
 		}
+
+		Vector3 perp = Vector3.Cross(Vector3.forward, player.transform.forward);
+        float dir = Vector3.Dot(perp, Vector3.up);
+        compas.transform.position = startPosition + (new Vector3(Vector3.Angle(player.transform.forward, Vector3.forward) * Mathf.Sign(dir) * rationAngleToPixel, 0, 0));
+
 		Cursor.visible = isPause;
 		pauseUI.SetActive(isPause);
 		cursor.gameObject.SetActive(!isPause);
