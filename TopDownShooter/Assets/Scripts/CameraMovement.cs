@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
 
+	public bool freeze = false;
+
 	public Transform target;
 
 	public Transform intermediatePoint;
@@ -20,14 +22,17 @@ public class CameraMovement : MonoBehaviour {
 
 	private Vector3 velocity = Vector3.zero;
 
+	//public GameController gc;
+
 	void Start(){
 		thisCam = GetComponent<Camera>();
 		pc = target.GetComponent<PlayerControl>();
 
+		//gc = (GameController)FindObjectOfType(typeof(GameController));
 	}
 
 	void FixedUpdate(){
-
+		if(!freeze){
 		if(pc.isAim){
 			Ray cameraRay = thisCam.ScreenPointToRay(Input.mousePosition);
 			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -42,5 +47,6 @@ public class CameraMovement : MonoBehaviour {
 		}
 		Vector3 desiredPosition = intermediatePoint.position + offSet;
 		transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smooth);
+	}
 	}
 }

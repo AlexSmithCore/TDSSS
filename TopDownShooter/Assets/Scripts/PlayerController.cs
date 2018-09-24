@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
 
 	public Animator anim;
 
+	public bool isFreeze;
+
 	public bool isMoving;
 	public bool isRunning;
 	public bool isRecovering;
@@ -239,7 +241,9 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate()
     {
-        rb.MovePosition(rb.position + _inputs * playerSpeed * Time.fixedDeltaTime);
+		if(!isFreeze){
+        	rb.MovePosition(rb.position + _inputs * playerSpeed * Time.fixedDeltaTime);
+		}
     }
 
 	private float GetSpeed(){

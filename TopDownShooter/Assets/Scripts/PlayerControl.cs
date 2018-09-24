@@ -8,6 +8,8 @@ public class PlayerControl : MonoBehaviour {
 	public bool isAim;
 	public bool isShooting;
 
+	public bool isFreeze;
+
 	public BulletController bullet;
 
 	public float bulletSpeed;
@@ -52,11 +54,14 @@ public class PlayerControl : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		rb.MovePosition(rb.position + _inputs * playerSpeed * Time.fixedDeltaTime);
+		if(!isFreeze){
+			rb.MovePosition(rb.position + _inputs * playerSpeed * Time.fixedDeltaTime);
+		}
 	}
 
 	void Update()
 	{
+		if(!isFreeze){
 		Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
 		Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 		float rayLenght;
@@ -103,6 +108,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		RandomDrop();
+		}
 	}
 
 	void RandomDrop(){
