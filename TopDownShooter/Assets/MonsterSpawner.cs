@@ -6,21 +6,26 @@ public class MonsterSpawner : MonoBehaviour {
 	public Transform basePoint; 
     public GameObject enemy;
     public float dist;
-    public float angle = 360;
+    private float angle;
     public int count = 15;
 
-	public float timeToSpawn;
+    public float timeToSpawn;
+	private float spawnCounter;
 
     void Start ()
     {
         angle = Mathf.PI * 2;
-		StartCoroutine(WaitToSpawn());
     }
 
-	IEnumerator WaitToSpawn(){
-		yield return new WaitForSeconds(timeToSpawn);
-
-		print("Spawned!");
+    void Update(){
+        spawnCounter -= Time.deltaTime;
+        if(spawnCounter <= 0){
+            spawnCounter = timeToSpawn;
+            SpawnEnemy();
+        }
+    }
+    void SpawnEnemy(){
+        print("Spawned!");
 		Vector3 point = basePoint.position;
 
         for(int i = 1; i <= count; i++)
@@ -34,6 +39,5 @@ public class MonsterSpawner : MonoBehaviour {
             //Создаём врага
             Instantiate(enemy, point, Quaternion.identity);
         }
-		StartCoroutine(WaitToSpawn());
-	}
+    }
 }

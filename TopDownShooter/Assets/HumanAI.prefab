@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 114028377774866916}
   - component: {fileID: 195591757700762424}
   - component: {fileID: 136094154450738502}
+  - component: {fileID: 114355305602532070}
   m_Layer: 13
   m_Name: HumanAI
   m_TagString: Untagged
@@ -1471,6 +1472,66 @@ MonoBehaviour:
   - itemName: 
     itemID: 0
     itemCount: 0
+--- !u!114 &114355305602532070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1731869960353788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0247b4566f31f541bbee467ac23c949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 0
+  bloodCount: 0
+  maxBloodCount: 4900
+  multiplier: 8
+  isBleeding: 0
+  timerStart: 0
+  bleedingCount: 0
+  bleedingTime: 0
+  bloodPuddle: {fileID: 1039797136941030, guid: f5b2f1e15163e77428a4c37c80cb3f94,
+    type: 2}
+  heart: {fileID: 0}
+  bloodText: {fileID: 0}
+  bleedingIndicator: {fileID: 0}
+  bleedingCountText: {fileID: 0}
+  bleedingGardient:
+    serializedVersion: 2
+    key0: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 0.2509804}
+    key1: {r: 1, g: 0, b: 0, a: 0.2509804}
+    key2: {r: 0, g: 0, b: 0, a: 0.5019608}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 16384
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 16384
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 3
+  bloodTextures:
+  - {fileID: 2800000, guid: 085d1adcec2968544b30e8bf50fdcbdf, type: 3}
+  - {fileID: 2800000, guid: 6b43684ee555bca46ae10dac560b5ac7, type: 3}
+  - {fileID: 2800000, guid: 5e5cc8ca92e7cb34787c6bf540869491, type: 3}
+  - {fileID: 2800000, guid: ecd048e7e077de34fb86724f9ef09c4d, type: 3}
+  - {fileID: 2800000, guid: 891509435554a014e92e0ab5cb46099e, type: 3}
 --- !u!136 &136094154450738502
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1480,7 +1541,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.35
+  m_Radius: 0.45
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
@@ -1566,8 +1627,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 1731869960353788}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 3.5
+  m_Radius: 0.75
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 25
   m_AngularSpeed: 220

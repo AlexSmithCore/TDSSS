@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BloodSystem : MonoBehaviour {
 
+	public bool isPlayer;
 	public float bloodCount;
 
 	public int maxBloodCount;
@@ -32,21 +33,19 @@ public class BloodSystem : MonoBehaviour {
 
 	public Texture[] bloodTextures;
 
+	HumanController hc;
+
+	public Collider col;
+
 	void Start(){
 		bloodCount = maxBloodCount;
+		col = GetComponent<Collider>();
+		if(!isPlayer){
+			hc = GetComponent<HumanController>();
+		}
 	}
 
 	void Update(){
-		/*if(Input.GetKeyDown(KeyCode.B)){
-			StopAllCoroutines();
-			bleedingCount++;
-			StartCoroutine(BloodyRiver());
-		}
-
-		if(Input.GetKeyDown(KeyCode.V)){
-			bleedingCount--;
-		}*/
-
 		if(isBleeding){
 			bloodCount -= (multiplier * bleedingCount) * Time.deltaTime;
 			if(!timerStart){
@@ -57,31 +56,38 @@ public class BloodSystem : MonoBehaviour {
 			StopAllCoroutines();
 		}
 
-		if(bleedingCount < 0 ){
+		if(bleedingCount > 0){
+			isBleeding = true;
+			if(isPlayer){
+				bleedingCountText.enabled = true;
+				bleedingCountText.text = "X " + bleedingCount;
+			}
+		} else {
+			if(isPlayer){
+				bleedingCountText.enabled = false;
+			}
+			isBleeding = false;
 			bleedingCount = 0;
 		}
 
-		if(bleedingCount > 0){
-			isBleeding = true;
-		} else {
-			isBleeding = false;
-		}
-
 		bleedingTime = (10 - bleedingCount) / 2;
-
-		if(bleedingCount > 0){
-			bleedingCountText.enabled = true;
-			bleedingCountText.text = "X " + bleedingCount;
-		} else { 
-			bleedingCountText.enabled = false;
-		}
 		
 		float test = bleedingCount / 10f;
 
-		bleedingIndicator.color = bleedingGardient.Evaluate(test);
-
-		heart.fillAmount = bloodCount / maxBloodCount;
-		bloodText.text = (int)bloodCount + " ml";
+		if(isPlayer){
+			bleedingIndicator.color = bleedingGardient.Evaluate(test);
+			heart.fillAmount = bloodCount / maxBloodCount;
+			bloodText.text = (int)bloodCount + " ml";
+		} else {
+			if (bloodCount <= 0){
+				BloodFloor(4);
+				hc.isDead = true;
+				Invoke("Death", 4f);
+				hc.human.isStopped = true;
+				col.enabled = false;
+				hc.animator.Play("Death", 0);
+			}
+		}
 	}
 
 
@@ -93,6 +99,14 @@ public class BloodSystem : MonoBehaviour {
 			puddle.GetComponent<Renderer>().material.SetTexture("_MainTex", bloodTextures[rand]);
 			yield return new WaitForSeconds(Random.Range(0f,TimerSet()));
 			StartCoroutine(BloodyRiver());
+		}
+	}
+
+	public void BloodFloor(int count){
+		for(int i = 0; i < count; i++){
+			GameObject puddle = Instantiate(bloodPuddle, new Vector3(transform.position.x + Random.Range(-0.5f, 0.5f),0.01f,transform.position.z + Random.Range(-0.5f, 0.5f)), transform.rotation);
+			int rand = Random.Range(0, bloodTextures.Length);
+			puddle.GetComponent<Renderer>().material.SetTexture("_MainTex", bloodTextures[rand]);
 		}
 	}
 
@@ -115,5 +129,9 @@ public class BloodSystem : MonoBehaviour {
 				return 0.5f;
 				break;
 		}
+	}
+
+	public void Death(){
+		Destroy(this.gameObject);
 	}
 }

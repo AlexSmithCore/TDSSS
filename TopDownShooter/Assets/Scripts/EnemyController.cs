@@ -8,6 +8,20 @@ public class EnemyController : MonoBehaviour {
 	public bool isDetected = false;
 	public bool isDead;
 
+	public bool isStun;
+
+	public bool isAttacking;
+
+	public float distToAttack;
+
+	public float stunTime;
+	public float stunCounter;
+
+	public float enemySpeed;
+
+	public float attackInterval;
+	private float attackCounter;
+
 	[SerializeField]	
 	private int point;
 	[SerializeField]
@@ -35,6 +49,11 @@ public class EnemyController : MonoBehaviour {
 
 	public Transform enemyTarget;
 
+	public GameObject hitPoint;
+	RaycastHit hit;
+
+	public float damage;
+
 	void Start () {
 		animator = GetComponent<Animator>();
 		enemy = GetComponent<NavMeshAgent>();
@@ -47,15 +66,45 @@ public class EnemyController : MonoBehaviour {
 		enemy.SetDestination(vertices[point]);
 
 		freq = Random.Range(0.01f, freq);
-		StartCoroutine ("FindTargetsWithDelay", .2f);
+		StartCoroutine ("FindTargetsWithDelay", .5f);
 	}
 	
 	void Update () {
+		if(isStun){
+			stunCounter -= Time.deltaTime;
+			if(stunCounter <= 0){
+				isStun = false;
+				enemySpeed = speed;
+				animator.SetFloat("isStun", 0f);
+			}
+		}
+
 		if(isDetected && !isDead){
 			curTarget = enemyTarget;
 			RotateTowards(curTarget);
 			enemy.SetDestination(curTarget.transform.position);
+			float dist = (transform.position - enemyTarget.transform.position).magnitude;
+			if(dist <= distToAttack && !isStun){
+				if(!isAttacking){
+					animator.Play("Attack");
+					attackCounter = attackInterval;
+				}
+				isAttacking = true;
+			}
 		}
+
+		if(isAttacking && !isStun){
+			attackCounter -= Time.deltaTime;
+			if(attackCounter <= 0){
+				animator.Play("Attack");
+				attackCounter = attackInterval;
+				isAttacking = false;
+			}
+		} else {
+			isAttacking = false;
+		}
+
+		enemy.isStopped = isAttacking;
 
 		if (em.health <= 0){
 			isDead = true;
@@ -64,26 +113,24 @@ public class EnemyController : MonoBehaviour {
 			coll.enabled = false;
 			animator.Play("Death", 0);
 		} else {
-			animator.Play("Base", 0);
-			if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f && !isDetected){
-				point = Random.Range(0, vertices.Length);
-				enemy.SetDestination(vertices[point]);
-			}
-			if (enemy.velocity.magnitude >= speed || enemy.velocity.magnitude < 0){
-				animator.SetFloat("Move", 1f);
-			}
-			else{
-				animator.SetFloat("Move", enemy.velocity.magnitude/speed);
+			if(!isAttacking){
+				animator.Play("Base", 0);
+				if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f && !isDetected){
+					point = Random.Range(0, vertices.Length);
+					enemy.SetDestination(vertices[point]);
+				}
+				if (enemy.velocity.magnitude >= speed || enemy.velocity.magnitude < 0){
+					animator.SetFloat("Move", 1f);
+				}
+				else{
+					animator.SetFloat("Move", enemy.velocity.magnitude/speed);
+				}
 			}
 		}
 
-		//enemy.SetDestination(curTarget.transform.position);
+		enemy.speed = enemySpeed;
+		Debug.DrawRay(hitPoint.transform.position, hitPoint.transform.TransformDirection(Vector3.forward) * 1f, Color.red);
 	}
-
-	/*public Transform VToTransform(Vector3 point){
-				//tPoint.transform.position = point;
-		//return Transform.TransformVector(point);
-	}*/
 
 	IEnumerator FindTargetsWithDelay(float delay) {
 		while (true) {
@@ -139,4 +186,19 @@ public class EnemyController : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 12f);
 		}
     }
+
+	void AttackEnemy(){
+  		Vector3 fwd = hitPoint.transform.TransformDirection(Vector3.forward);
+		Debug.Log("Attack!");
+  		if(Physics.Raycast(hitPoint.transform.position, fwd, out hit, 1.25f,targetMask))
+  		{
+			Debug.Log("Damaged!");
+			hit.collider.GetComponent<BloodSystem>().bloodCount -= 1000f;
+			float rand = Random.Range(0f,100f);
+			if(rand >= 50f){
+				hit.collider.GetComponent<BloodSystem>().bleedingCount++;
+			}
+			hit.collider.GetComponent<BloodSystem>().BloodFloor(2);
+  		}
+	}
 }

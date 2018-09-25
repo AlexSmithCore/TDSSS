@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour {
 
 	private Animator animator;
 
-	public EnemyController ec;
+	private EnemyController ec;
 
 	void Start(){
 		ec = GetComponent<EnemyController>();
@@ -22,7 +22,10 @@ public class EnemyManager : MonoBehaviour {
 
 	public void Hurt(int damage, Transform hittedBy){
 		health-= damage;
-		animator.Play("Hit", 0);
+		ec.isStun = true;
+		ec.stunCounter = ec.stunTime;
+		ec.enemySpeed -= 0.5f;
+		animator.SetFloat("isStun", 0.3f);
 		if(!ec.isDetected){
 			ec.enemyTarget = hittedBy;
 			ec.isDetected = true;

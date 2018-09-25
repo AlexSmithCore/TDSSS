@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class HumanController : MonoBehaviour {
 
 	[Header("Characteristics")]
+	public bool isDead;
 	public bool isDetected = false;
 
 	public bool isWorking = false;
@@ -43,8 +44,8 @@ public class HumanController : MonoBehaviour {
 	public List<Transform> visibleTargets = new List<Transform>();
 
 	private HumanManager hm;
-	private NavMeshAgent human;
-	private Animator animator;
+	public NavMeshAgent human;
+	public Animator animator;
 
 	public Light shootLight;
 
@@ -83,7 +84,7 @@ public class HumanController : MonoBehaviour {
 
 	
 	void FixedUpdate(){
-
+		if(!isDead){
 		if((int)hm.employment == 1){
 
 //Warrior
@@ -172,6 +173,7 @@ public class HumanController : MonoBehaviour {
 		+ human.velocity.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 		animator.SetFloat("LeftRight", human.velocity.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
 		-  human.velocity.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+		}
 	}
 
 	void ShootEffect(){
