@@ -91,12 +91,9 @@ public class GameController : MonoBehaviour {
 				homeUI.transform.GetChild(1).GetComponent<Text>().color = alphaColor;
 				playerLastRot = player.transform.eulerAngles.y;
 				compas.transform.rotation = Quaternion.Euler(Vector3.zero);
-				Vector3 baseDir = basePoint.transform.position - player.transform.position;
-				//float angle = Vector3.Angle(baseDir, player.transform.forward);
-				//float angle = Vector3.Cross(player.transform.forward,baseDir);
-				Vector3 dir = cam.transform.InverseTransformPoint(basePoint.transform.position);
+				Vector3 dir = basePoint.transform.position - player.transform.position;
  				float angle = Mathf.Atan2(dir.x, dir.z)*Mathf.Rad2Deg;
-				home.transform.eulerAngles = new Vector3(0, 0, angle);
+				home.transform.localRotation = Quaternion.Euler(0, 0, player.transform.root.rotation.eulerAngles.y - angle);
 				distToBaseText.text = (int)distToBase + " m";
 			} else {
 				Time.timeScale = 1f;
