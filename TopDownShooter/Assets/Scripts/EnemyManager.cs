@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour {
 
 	void Start(){
 		ec = GetComponent<EnemyController>();
+		animator = GetComponent<Animator>();
 	}
  
 	void Update(){
@@ -21,6 +22,7 @@ public class EnemyManager : MonoBehaviour {
 
 	public void Hurt(int damage, Transform hittedBy){
 		health-= damage;
+		animator.Play("Hit", 0);
 		if(!ec.isDetected){
 			ec.enemyTarget = hittedBy;
 			ec.isDetected = true;
