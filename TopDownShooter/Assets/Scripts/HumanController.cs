@@ -288,4 +288,8 @@ public class HumanController : MonoBehaviour {
 	 	return stocks[m].transform;
 	}
 
+	public void HitReaction(float value){
+		animator.SetFloat("Hit", value);
+	}
+
 }
