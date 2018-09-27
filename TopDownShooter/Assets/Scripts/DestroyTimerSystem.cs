@@ -6,6 +6,7 @@ public class DestroyTimerSystem : MonoBehaviour {
 
 
 	public bool isBlood;
+	public bool isUI;
 	public float timeToDestroy;
 
 	private float timer;
@@ -21,6 +22,9 @@ public class DestroyTimerSystem : MonoBehaviour {
 			if(timer >= timeToDestroy + 2f){
 				Destroy(gameObject);
 			}
+		}
+		if(isUI && timer >= timeToDestroy){
+				Destroy(gameObject);
 		}
 	}
 }

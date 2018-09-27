@@ -45,9 +45,9 @@ public class GameController : MonoBehaviour {
 
 	private float blurTrans;
 
-	private float pointToBlur = 3.25f;
+	private float pointToBlur = 3.15f;
 
-	private float maxPointBlur = 3.25f;
+	private float maxPointBlur = 3.15f;
 
 	public float playerLastRot;
 
@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update () {
-		if(!isPause){
+		if(!isWeaponPick){
 			Vector3 mousePos = Input.mousePosition;
 			cursor.transform.position = mousePos;
 			cursor.transform.eulerAngles += Vector3.forward * Time.deltaTime * 45;
@@ -74,7 +74,6 @@ public class GameController : MonoBehaviour {
 		if(isDead){
 			gameUI.SetActive(false);
 			deadUI.SetActive(true);
-			anim.SetTrigger("FadeOut");
 		}
 
 		if(Input.GetKeyDown(KeyCode.C)){
@@ -104,13 +103,9 @@ public class GameController : MonoBehaviour {
 			player.GetComponent<PlayerControl>().isFreeze = isWeaponPick;
 		}
 
-		//Debug.Log(player.localEulerAngles.y);
-
-		blurTrans = Mathf.Lerp(dofSettings.focusDistance, pointToBlur, Time.deltaTime * 25f);
+		blurTrans = Mathf.Lerp(dofSettings.focusDistance, pointToBlur, Time.deltaTime * 20f);
 		dofSettings.focusDistance = blurTrans;
 		ppp.depthOfField.settings = dofSettings;
-
-		//Debug.Log(player.transform.forward);
 
 		Time.timeScale = blurTrans / maxPointBlur;
 
@@ -130,9 +125,9 @@ public class GameController : MonoBehaviour {
 
 		compas.transform.rotation = Quaternion.Euler(0,0,Mathf.Lerp(compas.transform.eulerAngles.z,playerLastRot, Time.unscaledDeltaTime * 10f));
 
-		Cursor.visible = isPause;
+		Cursor.visible = isWeaponPick;
 		pauseUI.SetActive(isPause);
-		cursor.gameObject.SetActive(!isPause);
+		cursor.gameObject.SetActive(!isWeaponPick);
 	}
 
 	private float CheckAngle(float angle){
