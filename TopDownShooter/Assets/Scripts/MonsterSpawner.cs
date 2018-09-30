@@ -25,7 +25,6 @@ public class MonsterSpawner : MonoBehaviour {
         }
     }
     void SpawnEnemy(){
-        print("Spawned!");
 		Vector3 point = basePoint.position;
 
         for(int i = 1; i <= count; i++)

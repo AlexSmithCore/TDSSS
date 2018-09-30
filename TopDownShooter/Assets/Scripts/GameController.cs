@@ -53,8 +53,12 @@ public class GameController : MonoBehaviour {
 
 	DepthOfFieldModel.Settings dofSettings;
 
+	Inventory inventory;
+
 	void Start(){
 		cam = FindObjectOfType<Camera>();
+
+		inventory = Inventory.instance;
 
 		weaponPickPanel.SetActive(false);
         rationAngleToPixel = numberOfPixelsNorthToNorth / 360f;
@@ -77,6 +81,9 @@ public class GameController : MonoBehaviour {
 		}
 
 		if(Input.GetKeyDown(KeyCode.C)){
+			inventory.selectedSlot = 0;
+			inventory.isRightClick = false;
+			inventory.onItemChangedCallBack.Invoke();
 			isWeaponPick = !isWeaponPick;
 			weaponPickPanel.SetActive(isWeaponPick);
 

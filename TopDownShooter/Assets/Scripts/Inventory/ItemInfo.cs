@@ -9,6 +9,8 @@ public class ItemInfo : MonoBehaviour{
 
 	bool hasInteracted = false;
 
+	public int count = 1;
+
 	public virtual void Interact(){
 		Debug.Log("Interacting with " + transform.name);
 	}
@@ -28,8 +30,8 @@ public class ItemInfo : MonoBehaviour{
 	}
 
 	void PickUp(){
-		Debug.Log("Item picked!");
-		bool wasPickedUp = Inventory.instance.Add(item);
+		Debug.Log(count % item.stackSize);
+		bool wasPickedUp = Inventory.instance.Add(item, count);
 		if(wasPickedUp){
 			Destroy(gameObject);
 		}

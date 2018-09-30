@@ -17,39 +17,80 @@ public class Inventory : MonoBehaviour {
 	public delegate void OnItemChanged();
 	public OnItemChanged onItemChangedCallBack;
 
+	public Transform owner;
+
 	public int invSpace = 20;
+
+	private int fastItemsSpace = 3;
 
 	public float weight;
 	public float maxWeight;
+	public List<Slot> items = new List<Slot>();
 
-	public List<Item> items = new List<Item>();
+	public List<Slot> fastItems = new List<Slot>();
 
 	public Transform itemInfoPanel;
 
 	public Transform itemInfoParent;
 
-	void Start(){
-		if(onItemChangedCallBack != null)
-			onItemChangedCallBack.Invoke();
-	}
+	public int selectedSlot = 0;
 
-	public bool Add(Item item){
+	public bool isRightClick;
+
+	public bool Add(Item item, int iCount){
 		if(items.Count >= invSpace){
 			Debug.Log("Not enoght space!");
 			return false;
 		}
-		items.Add(item);
-		weight += item.weight;
 
-		ItemInfoPanel(item);
+		if(!CheckRepeat(item,iCount)){
+			items.Add(new Slot(item, iCount));
+		}
+
+		weight += item.weight;
+		if(iCount == 1){
+			ItemInfoPanel(item);
+		} else {
+			for(int c = 0; c < iCount; c++){
+				ItemInfoPanel(item);	
+			}
+		}
 		if(onItemChangedCallBack != null)
 			onItemChangedCallBack.Invoke();
 		return true;
 	}
 
-	public void Remove(Item item){
-		weight -= item.weight;
-		items.Remove(item);
+	public void Remove(){
+		weight -= items[selectedSlot].item.weight;
+		Instantiate(items[selectedSlot].item.prefab,owner.transform.position + transform.forward * 4, Quaternion.identity);
+		if(items[selectedSlot].count > 1){
+			items[selectedSlot].count--;
+		} else {
+			items.Remove(items[selectedSlot]);
+		}
+		isRightClick = false;
+
+		if(onItemChangedCallBack != null)
+			onItemChangedCallBack.Invoke();
+	}
+
+	public void Wear(){
+		isRightClick = false;
+
+		if(fastItems.Count >= fastItemsSpace){
+			Debug.Log("Not enoght space!");
+			if(onItemChangedCallBack != null)
+				onItemChangedCallBack.Invoke();
+			return;
+		}
+
+		if(items[selectedSlot].count > 1){
+			items[selectedSlot].count--;
+		} else {
+			items.Remove(items[selectedSlot]);
+		}
+
+		fastItems.Add(new Slot(items[selectedSlot].item,1));
 
 		if(onItemChangedCallBack != null)
 			onItemChangedCallBack.Invoke();
@@ -57,8 +98,20 @@ public class Inventory : MonoBehaviour {
 
 	public void ItemInfoPanel(Item item){
 		Transform infoPanel = Instantiate(itemInfoPanel, transform.position, Quaternion.identity);
+		infoPanel.GetChild(0).GetComponent<Image>().color = item.itemColor;
 		infoPanel.GetChild(1).GetComponent<Image>().sprite = item.icon;
 		infoPanel.GetChild(2).GetComponent<Text>().text = item.name;
-		infoPanel.SetParent(itemInfoParent);	
+		infoPanel.SetParent(itemInfoParent);
+		infoPanel.localScale = new Vector3(1f, 1f, 1f);	
+	}
+
+	public bool CheckRepeat(Item item, int iCount){
+		for(int i = 0; i < items.Count; i++){
+			if(items[i] != null && items[i].item == item && items[i].count < item.stackSize){
+				items[i].count += iCount;
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour {
+public class InventorySlot : MonoBehaviour, IPointerDownHandler {
 
-	public bool isBusy;
-
+	public bool isFastSlot;
 	public Image icon;
-	public Text itemCount;
 	Item item;
+
+	Inventory inventory;
+
+	void Start(){
+		inventory = Inventory.instance;
+	}
 
 	public void AddItem(Item newItem){
 		item = newItem;
@@ -27,4 +32,19 @@ public class InventorySlot : MonoBehaviour {
 		}
 	}
 
+	public void OnPointerDown(PointerEventData eventData)
+    {
+		if(!isFastSlot){
+		inventory.selectedSlot = int.Parse(this.name);
+			if(Input.GetMouseButtonDown(1)){
+				//Right click!
+				inventory.isRightClick = true;
+				inventory.onItemChangedCallBack.Invoke();
+				return;
+			}
+			// Left click!
+			inventory.isRightClick = false;
+			inventory.onItemChangedCallBack.Invoke();
+		}
+    }
 }

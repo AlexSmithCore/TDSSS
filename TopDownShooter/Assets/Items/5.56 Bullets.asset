@@ -13,4 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: 5.56 Bullets
   icon: {fileID: 21300000, guid: 648ea9bd0a0ed67489cecb1baa7820eb, type: 3}
-  weight: 0
+  weight: 0.3
+  stackSize: 13
+  description: Medium sized cartridges for the famous Cobra pistol 9. They contain
+    only 13 cartridges, they are the cheapest, but effective in the market.
+  itemColor: {r: 1, g: 0.80784315, b: 0, a: 0.6117647}
+  type: Bullets
+  prefab: {fileID: 1414464841766118, guid: 3473d515446285e488bc81a2e93d02f3, type: 2}

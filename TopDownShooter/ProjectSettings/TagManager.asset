@@ -12,6 +12,7 @@ TagManager:
   - Tree
   - WoodStock
   - DestoyBullet
+  - Cell
   layers:
   - Default
   - TransparentFX
