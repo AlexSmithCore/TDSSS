@@ -406,7 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 66aede5091596ba4c8f873e555f3de9d, type: 2}
   radius: 1
-  count: 8
+  count: 1
 --- !u!114 &114644348271004270
 MonoBehaviour:
   m_ObjectHideFlags: 1

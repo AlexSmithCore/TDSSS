@@ -42,19 +42,14 @@ public class Inventory : MonoBehaviour {
 			Debug.Log("Not enoght space!");
 			return false;
 		}
-
-		if(!CheckRepeat(item,iCount)){
-			items.Add(new Slot(item, iCount));
-		}
-
-		weight += item.weight;
-		if(iCount == 1){
-			ItemInfoPanel(item);
+		if(items.Count == 0){
+			items.Add(new Slot(item, 0));
 		} else {
-			for(int c = 0; c < iCount; c++){
-				ItemInfoPanel(item);	
-			}
+			CheckRepeat(item,iCount);
 		}
+
+		ItemInfoPanel(item, iCount);
+
 		if(onItemChangedCallBack != null)
 			onItemChangedCallBack.Invoke();
 		return true;
@@ -62,7 +57,8 @@ public class Inventory : MonoBehaviour {
 
 	public void Remove(){
 		weight -= items[selectedSlot].item.weight;
-		Instantiate(items[selectedSlot].item.prefab,owner.transform.position + transform.forward * 4, Quaternion.identity);
+		GameObject drop = Instantiate(items[selectedSlot].item.prefab,owner.transform.position + transform.forward * 4, Quaternion.identity);
+		drop.GetComponent<ItemInfo>().count = 1;
 		if(items[selectedSlot].count > 1){
 			items[selectedSlot].count--;
 		} else {
@@ -96,22 +92,37 @@ public class Inventory : MonoBehaviour {
 			onItemChangedCallBack.Invoke();
 	}
 
-	public void ItemInfoPanel(Item item){
+	public void ItemInfoPanel(Item item, int count){
 		Transform infoPanel = Instantiate(itemInfoPanel, transform.position, Quaternion.identity);
 		infoPanel.GetChild(0).GetComponent<Image>().color = item.itemColor;
 		infoPanel.GetChild(1).GetComponent<Image>().sprite = item.icon;
 		infoPanel.GetChild(2).GetComponent<Text>().text = item.name;
 		infoPanel.SetParent(itemInfoParent);
 		infoPanel.localScale = new Vector3(1f, 1f, 1f);	
+		if(count > 1){
+			infoPanel.GetChild(4).gameObject.SetActive(true);
+			infoPanel.GetChild(4).GetChild(0).GetComponent<Text>().text = "x " + count;
+		}
 	}
 
-	public bool CheckRepeat(Item item, int iCount){
+	public void CheckRepeat(Item item, int iCount){
+		int count = iCount;
+		Debug.Log(count);
 		for(int i = 0; i < items.Count; i++){
+			//items.Add(new Slot(item, 1));
 			if(items[i] != null && items[i].item == item && items[i].count < item.stackSize){
-				items[i].count += iCount;
-				return true;
+				for(int c = count; c > 0; c--){
+					weight += item.weight;
+					items[i].count ++;
+					if(items[i].count >= item.stackSize){
+						print("Pasha privet!");
+						count = c;
+						//count--;
+						items.Add(new Slot(item, 0));
+						break;
+					} 
+				}
 			}
 		}
-		return false;
 	}
 }

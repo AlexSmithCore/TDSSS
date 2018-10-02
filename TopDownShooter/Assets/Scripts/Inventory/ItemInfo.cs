@@ -30,7 +30,6 @@ public class ItemInfo : MonoBehaviour{
 	}
 
 	void PickUp(){
-		Debug.Log(count % item.stackSize);
 		bool wasPickedUp = Inventory.instance.Add(item, count);
 		if(wasPickedUp){
 			Destroy(gameObject);

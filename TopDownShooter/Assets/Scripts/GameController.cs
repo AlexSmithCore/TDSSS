@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour {
 
 	private float pointToBlur = 3.15f;
 
-	private float maxPointBlur = 3.15f;
+	private float maxPointBlur = 3.35f;
 
 	public float playerLastRot;
 

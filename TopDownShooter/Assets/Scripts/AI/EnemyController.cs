@@ -189,10 +189,8 @@ public class EnemyController : MonoBehaviour {
 
 	void AttackEnemy(){
   		Vector3 fwd = hitPoint.transform.TransformDirection(Vector3.forward);
-		Debug.Log("Attack!");
   		if(Physics.Raycast(hitPoint.transform.position, fwd, out hit, 1.25f,targetMask))
   		{
-			Debug.Log("Damaged!");
 			hit.collider.GetComponent<BloodSystem>().bloodCount -= 1000f;
 			if (hit.collider.tag != "Player"){
 				hit.collider.GetComponent<HumanController>().HitReaction(0.5f);

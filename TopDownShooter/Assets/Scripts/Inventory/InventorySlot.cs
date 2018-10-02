@@ -18,12 +18,18 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler {
 		item = newItem;
 		icon.sprite = item.icon;
 		icon.enabled = true;
+		if(isFastSlot){
+			GetComponent<Image>().color = newItem.itemColor;
+		}
 	}
 
 	public void ClearItem(){
 		item = null;
 		icon.sprite = null;
 		icon.enabled = false;
+		if(isFastSlot){
+			GetComponent<Image>().color = new Color(255,255,255,0.5f);
+		}
 	}
 
 	public void UseItem(){

@@ -8,6 +8,7 @@ public class InventoryUI : MonoBehaviour {
 
 	public Transform itemsParent;
 	public Transform fSlotsParent;
+	public Transform mainfSlotsParent;
 	public Transform infoParent;
 
 	public Transform actionPanel;
@@ -17,6 +18,8 @@ public class InventoryUI : MonoBehaviour {
 	InventorySlot[] slots;
 
 	InventorySlot[] fSlots;
+
+	InventorySlot[] mainfSlots;
 
 	public Transform weight;
 
@@ -28,6 +31,7 @@ public class InventoryUI : MonoBehaviour {
 
 		slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 		fSlots = fSlotsParent.GetComponentsInChildren<InventorySlot>();
+		mainfSlots = mainfSlotsParent.GetComponentsInChildren<InventorySlot>();
 	}
 
 	public void UpdateUI(){
@@ -59,15 +63,19 @@ public class InventoryUI : MonoBehaviour {
 				}
 			} else {
 				slots[i].ClearItem();
+				slots[i].transform.GetChild(1).GetComponent<Image>().enabled = false;
+					slots[i].transform.GetChild(2).GetComponent<Text>().enabled = false;
 			}
 		}
 
 		for(int i = 1; i < 4; i++){
-			if(i < inventory.fastItems.Count)
+			if(i <= inventory.fastItems.Count)
 			{
-				fSlots[i].AddItem(inventory.fastItems[i].item);
+				fSlots[i].AddItem(inventory.fastItems[i-1].item);
+				mainfSlots[i-1].AddItem(inventory.fastItems[i-1].item);
 			} else {
 				fSlots[i].ClearItem();
+				mainfSlots[i-1].ClearItem();
 			}
 		}
 	}
