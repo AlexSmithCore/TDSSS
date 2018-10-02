@@ -42,11 +42,8 @@ public class Inventory : MonoBehaviour {
 			Debug.Log("Not enoght space!");
 			return false;
 		}
-		if(items.Count == 0){
-			items.Add(new Slot(item, 0));
-		} else {
-			CheckRepeat(item,iCount);
-		}
+
+		CheckRepeat(item,iCount);
 
 		ItemInfoPanel(item, iCount);
 
@@ -80,16 +77,22 @@ public class Inventory : MonoBehaviour {
 			return;
 		}
 
-		if(items[selectedSlot].count > 1){
-			items[selectedSlot].count--;
-		} else {
-			items.Remove(items[selectedSlot]);
+		bool isHaveItem = CheckFastItems();
+		if(!isHaveItem){
+			fastItems.Add(new Slot(items[selectedSlot].item,1));
 		}
-
-		fastItems.Add(new Slot(items[selectedSlot].item,1));
 
 		if(onItemChangedCallBack != null)
 			onItemChangedCallBack.Invoke();
+	}
+
+	private bool CheckFastItems(){
+		for(int i = 0; i < fastItems.Count; i++){
+			if(fastItems[i].item == items[selectedSlot].item){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void ItemInfoPanel(Item item, int count){
@@ -106,23 +109,77 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void CheckRepeat(Item item, int iCount){
-		int count = iCount;
-		Debug.Log(count);
-		for(int i = 0; i < items.Count; i++){
-			//items.Add(new Slot(item, 1));
-			if(items[i] != null && items[i].item == item && items[i].count < item.stackSize){
-				for(int c = count; c > 0; c--){
-					weight += item.weight;
-					items[i].count ++;
-					if(items[i].count >= item.stackSize){
-						print("Pasha privet!");
-						count = c;
-						//count--;
-						items.Add(new Slot(item, 0));
-						break;
-					} 
+	int count = iCount;
+		if(items.Count == 0){
+			Debug.Log("Stacking!");
+			Stacking(iCount ,item);	
+			return;
+		}
+		
+		bool isNeedItem = CheckInv(item);
+		if(isNeedItem){
+			int c = iCount; // 12
+			for(int i = 0; i < items.Count; i++){
+				if(items[i].item == item && items[i].count < items[i].item.stackSize){
+					if(c <= item.stackSize - items[i].count){
+						items[i].count += c;
+						weight += item.weight * c;
+						return;
+					} else {
+						c-= item.stackSize - items[i].count;
+						weight += (item.stackSize - items[i].count) * item.weight;
+						items[i].count = item.stackSize;
+					}
+					if(c <= 0){
+						return;
+					}
+				}
+
+				if(i >= items.Count - 1){
+					if(c > 0){
+						Debug.Log("Stacking!");
+						Stacking(c ,item);	
+						return;
+					}
 				}
 			}
+		} else {
+			Debug.Log("Stacking!");
+			Stacking(iCount ,item);	
+			return;
+		}
+
+		/*for(int i = 0; i < items.Count; i++){
+			if(items[i].item == item) {
+				if(items[i].count < items[i].item.stackSize){
+					//items[i].count = Stacking(count, item);
+				} else {
+					Stacking(iCount ,item);
+					return;
+				}
+			}
+		}*/
+	}
+
+	private bool CheckInv(Item item){
+		for(int i = 0; i < items.Count; i++){
+			if(items[i].item == item && items[i].count < items[i].item.stackSize){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void Stacking(int iCount ,Item item){
+	int count = iCount;
+		for( int i = 0; i < count / item.stackSize; i++){
+			items.Add( new Slot( item, item.stackSize));
+			weight+=item.weight * item.stackSize;
+		}
+
+		if(count % item.stackSize != 0){
+			items.Add(new Slot(item, count % item.stackSize));
+			weight+= item.weight * (count % item.stackSize);
 		}
 	}
 }

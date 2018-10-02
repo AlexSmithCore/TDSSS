@@ -38,7 +38,7 @@ public class InventoryUI : MonoBehaviour {
 // Action Menu
 		if(inventory.isRightClick && inventory.selectedSlot <= inventory.items.Count - 1){
 			actionPanel.gameObject.SetActive(true);
-			actionPanel.transform.position = itemsParent.GetChild(inventory.selectedSlot).transform.position - (Vector3.up * 96);
+			actionPanel.transform.position = itemsParent.GetChild(inventory.selectedSlot).transform.position - (Vector3.up * ((Screen.height * 122f) / 1080));
 		} else {
 			actionPanel.gameObject.SetActive(false);
 		}
