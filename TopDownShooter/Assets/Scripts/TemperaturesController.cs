@@ -37,8 +37,7 @@ public class TemperaturesController : MonoBehaviour {
 		temperature = 35;
 	}
 
-	void Update(){
-		//float t = (temperature - minTemperature) / ( maxTemperature - minTemperature );
+	void LateUpdate(){
 		float t = 1 - ((temperature - minTemperature) / ( maxTemperature - minTemperature ));
 		coldHeart.color = new Color(coldHeart.color.r,coldHeart.color.g,coldHeart.color.b,t);
 

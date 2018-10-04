@@ -33,7 +33,7 @@ public class HumanManager : MonoBehaviour {
 		unityNameText = obj;
 	}
 
-	void Update(){
+	void FixedUpdate(){
 		unityNameText.transform.position = cam.WorldToScreenPoint(transform.position + (Vector3.up * 3f));
 	}
 

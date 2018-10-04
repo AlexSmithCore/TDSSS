@@ -16,25 +16,11 @@ public class GameController : MonoBehaviour {
 	public Transform player;
 
 	public Camera cam;
-
-	public GameObject deadUI;
-	public GameObject gameUI;
-
-	public Sprite[] weaponType;
-
-	public Animator anim;
-
 	public Image cursor;
-
-	public GameObject pauseUI;
-
-	public float numberOfPixelsNorthToNorth;
 	public Image compas;
 	public GameObject home;
 
 	private GameObject homeUI;
-    float rationAngleToPixel;
-
 	public Transform basePoint;
 
 	public Text distToBaseText;
@@ -51,6 +37,10 @@ public class GameController : MonoBehaviour {
 
 	public float playerLastRot;
 
+	public GameObject usingUI;
+
+	private float progessUsing;
+
 	DepthOfFieldModel.Settings dofSettings;
 
 	Inventory inventory;
@@ -61,11 +51,11 @@ public class GameController : MonoBehaviour {
 		inventory = Inventory.instance;
 
 		weaponPickPanel.SetActive(false);
-        rationAngleToPixel = numberOfPixelsNorthToNorth / 360f;
 
 		dofSettings = ppp.depthOfField.settings;
 
 		homeUI = home.transform.GetChild(0).gameObject;
+		Cursor.visible = isWeaponPick;
 	}
 
 	void Update () {
@@ -75,9 +65,29 @@ public class GameController : MonoBehaviour {
 			cursor.transform.eulerAngles += Vector3.forward * Time.deltaTime * 45;
 		}
 
-		if(isDead){
-			gameUI.SetActive(false);
-			deadUI.SetActive(true);
+		if(Input.GetKey(KeyCode.Alpha1)){
+			if(Input.anyKeyDown){
+				progessUsing = 0;
+				return;
+			}
+			if(inventory.fastItems.Count > 0){
+				usingUI.SetActive(true);
+				progessUsing+= Time.deltaTime;
+				usingUI.transform.GetChild(0).GetComponent<Image>().fillAmount = progessUsing / inventory.fastItems[0].item.timeToUse;
+				usingUI.transform.GetChild(1).GetComponent<Text>().text = (int)((inventory.fastItems[0].item.timeToUse - progessUsing)+1) + " sec";
+				if(progessUsing >= inventory.fastItems[0].item.timeToUse){
+					progessUsing=0;
+					inventory.fastItems[0].item.Use();
+					return;
+				}
+			} else {
+				usingUI.SetActive(false);
+				progessUsing = 0;
+				return;
+			}
+		} else {
+			usingUI.SetActive(false);
+			progessUsing = 0;
 		}
 
 		if(Input.GetKeyDown(KeyCode.C)){
@@ -86,6 +96,10 @@ public class GameController : MonoBehaviour {
 			inventory.onItemChangedCallBack.Invoke();
 			isWeaponPick = !isWeaponPick;
 			weaponPickPanel.SetActive(isWeaponPick);
+			Cursor.visible = isWeaponPick;
+			cursor.gameObject.SetActive(!isWeaponPick);
+
+			//player.GetComponent<TemperaturesController>().ChangeTemperature();
 
 			if(isWeaponPick){
 				Time.timeScale = 0.1f;
@@ -129,12 +143,10 @@ public class GameController : MonoBehaviour {
 				pointToBlur = maxPointBlur;
 			}
 		}
-
+		
+		if(isWeaponPick)
 		compas.transform.rotation = Quaternion.Euler(0,0,Mathf.Lerp(compas.transform.eulerAngles.z,playerLastRot, Time.unscaledDeltaTime * 10f));
-
-		Cursor.visible = isWeaponPick;
-		pauseUI.SetActive(isPause);
-		cursor.gameObject.SetActive(!isWeaponPick);
+	
 	}
 
 	private float CheckAngle(float angle){

@@ -52,8 +52,6 @@ public class EnemyController : MonoBehaviour {
 	public GameObject hitPoint;
 	RaycastHit hit;
 
-	public float damage;
-
 	void Start () {
 		animator = GetComponent<Animator>();
 		enemy = GetComponent<NavMeshAgent>();
@@ -69,7 +67,7 @@ public class EnemyController : MonoBehaviour {
 		StartCoroutine ("FindTargetsWithDelay", .5f);
 	}
 	
-	void Update () {
+	void FixedUpdate () {
 		if(isStun){
 			stunCounter -= Time.deltaTime;
 			if(stunCounter <= 0){
@@ -129,7 +127,6 @@ public class EnemyController : MonoBehaviour {
 		}
 
 		enemy.speed = enemySpeed;
-		Debug.DrawRay(hitPoint.transform.position, hitPoint.transform.TransformDirection(Vector3.forward) * 1f, Color.red);
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) {

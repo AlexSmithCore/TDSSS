@@ -45,7 +45,7 @@ public class BloodSystem : MonoBehaviour {
 		}
 	}
 
-	void Update(){
+	void LateUpdate(){
 		if(isBleeding){
 			bloodCount -= (multiplier * bleedingCount) * Time.deltaTime;
 			if(!timerStart){

@@ -67,6 +67,40 @@ public class Inventory : MonoBehaviour {
 			onItemChangedCallBack.Invoke();
 	}
 
+	public void RemoveItem(Item item){
+		for(int i = items.Count - 1; i >= 0; i--){
+			Debug.Log("test!");
+			if(items[i].item == item){
+				weight -= items[i].item.weight;
+				if(items[i].count > 1){
+					items[i].count--;
+				} else {
+					items.Remove(items[i]);
+				}
+				if(onItemChangedCallBack != null)
+					onItemChangedCallBack.Invoke();
+				return;
+			}
+		}
+	}
+
+	public void RemoveAllItem(int id){
+		items.Remove(items[id]);
+	}
+
+	public void RemoveAll(){
+		for(int i = 0; i < items[selectedSlot].count; i++){
+			weight -= items[selectedSlot].item.weight;
+		}
+		GameObject drop = Instantiate(items[selectedSlot].item.prefab,owner.transform.position + transform.forward * 4, Quaternion.identity);
+		drop.GetComponent<ItemInfo>().count = items[selectedSlot].count;
+		items.Remove(items[selectedSlot]);
+		isRightClick = false;
+
+		if(onItemChangedCallBack != null)
+			onItemChangedCallBack.Invoke();
+	}
+
 	public void Wear(){
 		isRightClick = false;
 
@@ -93,6 +127,13 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 		return false;
+	}
+
+	public void RemoveFastSlot(int id){
+		Debug.Log("Remove " + id + " slot!");
+		if(fastItems.Count > 0){
+			fastItems.Remove(fastItems[id]);
+		}
 	}
 
 	public void ItemInfoPanel(Item item, int count){
@@ -148,17 +189,6 @@ public class Inventory : MonoBehaviour {
 			Stacking(iCount ,item);	
 			return;
 		}
-
-		/*for(int i = 0; i < items.Count; i++){
-			if(items[i].item == item) {
-				if(items[i].count < items[i].item.stackSize){
-					//items[i].count = Stacking(count, item);
-				} else {
-					Stacking(iCount ,item);
-					return;
-				}
-			}
-		}*/
 	}
 
 	private bool CheckInv(Item item){

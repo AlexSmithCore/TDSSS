@@ -32,16 +32,17 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler {
 		}
 	}
 
-	public void UseItem(){
+	/*public void UseItem(){
 		if(item != null){
 			item.Use();
 		}
-	}
+	}*/
 
 	public void OnPointerDown(PointerEventData eventData)
     {
+		int slot = int.Parse(this.name);
 		if(!isFastSlot){
-		inventory.selectedSlot = int.Parse(this.name);
+		inventory.selectedSlot = slot;
 			if(Input.GetMouseButtonDown(1)){
 				//Right click!
 				inventory.isRightClick = true;
@@ -51,6 +52,12 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler {
 			// Left click!
 			inventory.isRightClick = false;
 			inventory.onItemChangedCallBack.Invoke();
+		} else {
+			inventory.isRightClick = false;
+			inventory.RemoveFastSlot(slot);
+			// Left click!
+			inventory.onItemChangedCallBack.Invoke();
+			return;
 		}
     }
 }

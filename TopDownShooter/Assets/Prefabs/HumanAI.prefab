@@ -1416,7 +1416,7 @@ MonoBehaviour:
   curTarget: {fileID: 0}
   Speed: 1
   viewRadius: 16
-  viewAngle: 155
+  viewAngle: 165
   targetMask:
     serializedVersion: 2
     m_Bits: 4096

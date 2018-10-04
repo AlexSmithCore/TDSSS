@@ -148,30 +148,30 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra
-    pixelLightCount: 16
-    shadows: 2
-    shadowResolution: 3
-    shadowProjection: 0
-    shadowCascades: 4
+    pixelLightCount: 32
+    shadows: 0
+    shadowResolution: 0
+    shadowProjection: 1
+    shadowCascades: 1
     shadowDistance: 50
-    shadowNearPlaneOffset: 3
+    shadowNearPlaneOffset: 0
     shadowCascade2Split: 0.5303024
     shadowCascade4Split: {x: 0.5077263, y: 0.6158941, z: 0.67593825}
-    shadowmaskMode: 1
+    shadowmaskMode: 0
     blendWeights: 4
     textureQuality: 0
-    anisotropicTextures: 2
-    antiAliasing: 8
-    softParticles: 0
+    anisotropicTextures: 0
+    antiAliasing: 0
+    softParticles: 1
     softVegetation: 1
-    realtimeReflectionProbes: 1
+    realtimeReflectionProbes: 0
     billboardsFaceCameraPosition: 1
     vSyncCount: 1
     lodBias: 2
     maximumLODLevel: 0
-    particleRaycastBudget: 4096
-    asyncUploadTimeSlice: 2
-    asyncUploadBufferSize: 4
+    particleRaycastBudget: 1024
+    asyncUploadTimeSlice: 4
+    asyncUploadBufferSize: 8
     resolutionScalingFixedDPIFactor: 1
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:

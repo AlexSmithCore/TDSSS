@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
-
-	public bool isMove;
 	public bool isAim;
-	public bool isShooting;
 
 	public bool isFreeze;
 
@@ -41,8 +39,19 @@ public class PlayerControl : MonoBehaviour {
 
 	public float spreadSize;
 
+	Inventory inventory;
+
+	Slot currentAmmo;
+
+	public Item gunAmmo;
+
+	public int ammoCount;
+
+	public GameObject weaponPanel;
+
 	void Start()
 	{
+		inventory = Inventory.instance;
 		rb = GetComponent<Rigidbody>();
 		animator = GetComponent<Animator>();
 		mainCamera = FindObjectOfType<Camera>();
@@ -50,6 +59,9 @@ public class PlayerControl : MonoBehaviour {
 		pointToLook = Vector3.zero;
 
 		playerSpeed = walkSpeed;
+
+		Invoke("ShootEffect", .1f);
+		UpdateWeaponUI();
 	}
 
 	void FixedUpdate()
@@ -62,49 +74,56 @@ public class PlayerControl : MonoBehaviour {
 	void Update()
 	{
 		if(!isFreeze){
-		Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-		Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-		float rayLenght;
-		if(groundPlane.Raycast(cameraRay, out rayLenght)){
-			pointToLook = cameraRay.GetPoint(rayLenght);
-			pointToLook.Set(pointToLook.x, transform.position.y, pointToLook.z);
-			transform.LookAt(pointToLook);
+			Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+			float rayLenght;
+			if(groundPlane.Raycast(cameraRay, out rayLenght)){
+				pointToLook = cameraRay.GetPoint(rayLenght);
+				pointToLook.Set(pointToLook.x, transform.position.y, pointToLook.z);
+				transform.LookAt(pointToLook);
+			}
+
+			_inputs = Vector3.zero;
+			_inputs.x = Input.GetAxis("Horizontal");
+			_inputs.z = Input.GetAxis("Vertical");
+			
+			animator.SetFloat("Move", _inputs.normalized.magnitude);
+
+			animator.SetFloat("BackFor", + _inputs.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+			+ _inputs.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+			animator.SetFloat("LeftRight", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+			- _inputs.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+
+			isAim = Input.GetMouseButton(1);
+
+// Reload
+		if(Input.GetKeyDown(KeyCode.R)){
+			if(Reload(gunAmmo)){
+				Debug.Log("Reloaded!");
+			} else {
+				Debug.Log("Don't have any ammo!");
+			}
 		}
 
-		_inputs = Vector3.zero;
-        _inputs.x = Input.GetAxis("Horizontal");
-        _inputs.z = Input.GetAxis("Vertical");
-		
-		animator.SetFloat("Move", _inputs.normalized.magnitude);
-
-		animator.SetFloat("BackFor", + _inputs.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
-		+ _inputs.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-		animator.SetFloat("LeftRight", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
-		- _inputs.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-
-		isAim = Input.GetMouseButton(1);
-	
-		isShooting = Input.GetMouseButton(0);
-
-		if(isShooting && isAim){
-			shotCounter -= Time.deltaTime;
-			if(shotCounter <= 0){
-				shootLight.enabled = true;
-				PS_shoot.SetActive(true);
-				Invoke("ShootEffect", .1f);
-				shotCounter = interval - Random.Range(0f,0.3f);
-				float xSpread = Random.Range(-1, 1);
-				float ySpread = Random.Range(-1, 1);
-				Vector3 spread = new Vector3(xSpread, ySpread, 0.0f).normalized * spreadSize;
-				Quaternion rotation = Quaternion.Euler(spread) * transform.rotation;
-				BulletController newBullet = Instantiate(bullet, firePoint.position, rotation) as BulletController;
-				newBullet.speed = bulletSpeed;
-				newBullet.parent = transform;
-				GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
-				newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
+		if(Input.GetMouseButtonDown(0)){
+			if(isAim && ammoCount > 0){
+			//shotCounter -= Time.deltaTime;
+			currentAmmo.count--;
+			UpdateWeaponUI();
+			shootLight.enabled = true;
+			PS_shoot.SetActive(true);
+			Invoke("ShootEffect", .1f);
+			shotCounter = interval - Random.Range(0f,0.3f);
+			float xSpread = Random.Range(-1, 1);
+			float ySpread = Random.Range(-1, 1);
+			Vector3 spread = new Vector3(xSpread, ySpread, 0.0f).normalized * spreadSize;
+			Quaternion rotation = Quaternion.Euler(spread) * transform.rotation;
+			BulletController newBullet = Instantiate(bullet, firePoint.position, rotation) as BulletController;
+			newBullet.speed = bulletSpeed;
+			newBullet.parent = transform;
+			GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
+			newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
 			}
-		} else {
-			shotCounter = 0;
 		}
 
 		RandomDrop();
@@ -131,6 +150,44 @@ public class PlayerControl : MonoBehaviour {
 	void ShootEffect(){
 		PS_shoot.SetActive(false);
 		shootLight.enabled = false;
+	}
+
+	private bool Reload(Item needBullets){
+		for(int i = 0; i < inventory.items.Count; i++){
+			if(inventory.items[i].item == needBullets){
+				if(currentAmmo != null){
+					if(currentAmmo.count > 0)
+					inventory.Add(currentAmmo.item, currentAmmo.count);
+				}
+				currentAmmo = inventory.items[i];
+				UpdateWeaponUI();
+				inventory.RemoveAllItem(i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void UpdateWeaponUI(){
+		if(currentAmmo != null){
+			ammoCount = currentAmmo.count;
+		}
+		weaponPanel.transform.GetChild(4).GetComponent<Text>().text = ammoCount + "";
+		if(ammoCount <= 0){
+			weaponPanel.transform.GetChild(6).gameObject.SetActive(true);
+			weaponPanel.transform.GetChild(5).gameObject.SetActive(false);
+			return;
+		}
+
+		weaponPanel.transform.GetChild(6).gameObject.SetActive(false);
+		weaponPanel.transform.GetChild(5).gameObject.SetActive(true);
+		for(int i = 0; i < weaponPanel.transform.GetChild(5).childCount; i++){
+			if(i >= ammoCount){
+				weaponPanel.transform.GetChild(5).GetChild(i).gameObject.SetActive(false);
+			} else {
+				weaponPanel.transform.GetChild(5).GetChild(i).gameObject.SetActive(true);
+			}
+		}
 	}
 	
 }

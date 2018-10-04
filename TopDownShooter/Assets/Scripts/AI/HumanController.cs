@@ -79,14 +79,13 @@ public class HumanController : MonoBehaviour {
 		human = GetComponent<NavMeshAgent>();
 		mainTarget = GameObject.FindGameObjectWithTag("Player").transform;
 		curTarget = mainTarget;
-		StartCoroutine ("FindTargetsWithDelay", .2f);
+		StartCoroutine ("FindTargetsWithDelay", .5f);
 	}
 
 	
 	void FixedUpdate(){
 		if(!isDead){
 		if((int)hm.employment == 1){
-
 //Warrior
 			if(isDetected && enemyTarget != null){
 				RotateTowards(enemyTarget);
@@ -155,7 +154,6 @@ public class HumanController : MonoBehaviour {
 					}
 				}
 			} else {
-
 //Nothing
 
 		}
