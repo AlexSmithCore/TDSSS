@@ -11,6 +11,8 @@ public class HumanController : MonoBehaviour {
 
 	public bool isWorking = false;
 
+	public bool isInteracting = false;
+
 	[SerializeField]
 	private bool checkForWork = false;
 
@@ -85,92 +87,93 @@ public class HumanController : MonoBehaviour {
 	
 	void FixedUpdate(){
 		if(!isDead){
-		if((int)hm.employment == 1){
+			if(!isInteracting){
+			if((int)hm.employment == 1){
 //Warrior
-			if(isDetected && enemyTarget != null){
-				RotateTowards(enemyTarget);
-				if ((transform.position - enemyTarget.transform.position).magnitude <= distToEnemy){
-					Vector3 retreatPointMathf = transform.position + (transform.position - enemyTarget.transform.position).normalized * distToEnemy;
-					retreatPointMathf.y = 0;
-					retreatPoint.transform.position = retreatPointMathf;
-					curTarget = retreatPoint.transform;
+
+				if(isDetected && enemyTarget != null){
+					RotateTowards(enemyTarget);
+					if ((transform.position - enemyTarget.transform.position).magnitude <= distToEnemy){
+						Vector3 retreatPointMathf = transform.position + (transform.position - enemyTarget.transform.position).normalized * distToEnemy;
+						retreatPointMathf.y = 0;
+						retreatPoint.transform.position = retreatPointMathf;
+						curTarget = retreatPoint.transform;
+					} else {
+						curTarget = mainTarget;
+					}
 				} else {
 					curTarget = mainTarget;
 				}
-			} else {
-				curTarget = mainTarget;
-			}
 
-			human.SetDestination(curTarget.transform.position);
+				human.SetDestination(curTarget.transform.position);
 
-			isAim = isDetected;
+				isAim = isDetected;
 
-			if(isAim && enemyTarget != null){
-				shotCounter -= Time.deltaTime;
-				if(shotCounter <= 0){
-					shootLight.enabled = true;
-					PS_shoot.SetActive(true);
-					Invoke("ShootEffect", .1f);
-					shotCounter = interval - Random.Range(0f,0.3f);
-					float xSpread = Random.Range(-1, 1);
-					float ySpread = Random.Range(-1, 1);
-					//normalize the spread vector to keep it conical
-					Vector3 spread = new Vector3(xSpread, ySpread, 0.0f).normalized * spreadSize;
-					Quaternion rotation = Quaternion.Euler(spread) * transform.rotation;
-					BulletController newBullet = Instantiate(bullet, firePoint.position, rotation) as BulletController;
-					newBullet.speed = bulletSpeed;
-					newBullet.parent = transform;
-					GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
-					newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
-				}
-			} else {
-				shotCounter = 0;
-			}
-
-			} else if((int)hm.employment == 2) {
-
-// WoodChopper
-
-				if(!isWorking){
-					if(!checkForWork){
-						StartCoroutine(WorkCheckDelay(1));
+				if(isAim && enemyTarget != null){
+					shotCounter -= Time.deltaTime;
+					if(shotCounter <= 0){
+						shootLight.enabled = true;
+						PS_shoot.SetActive(true);
+						Invoke("ShootEffect", .1f);
+						shotCounter = interval - Random.Range(0f,0.3f);
+						float xSpread = Random.Range(-1, 1);
+						float ySpread = Random.Range(-1, 1);
+						Vector3 spread = new Vector3(xSpread, ySpread, 0.0f).normalized * spreadSize;
+						Quaternion rotation = Quaternion.Euler(spread) * transform.rotation;
+						BulletController newBullet = Instantiate(bullet, firePoint.position, rotation) as BulletController;
+						newBullet.speed = bulletSpeed;
+						newBullet.parent = transform;
+						GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
+						newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
 					}
 				} else {
-					human.SetDestination(curTarget.transform.position);
-					if((transform.position - curTarget.transform.position).magnitude <= 2.5f){
-						RotateTowards(curTarget);
-						if(!isCuttingsTrees){
-							if(!goToStock){
-								StartCoroutine(CuttingsTrees());
+					shotCounter = 0;
+				}
+
+				} else if((int)hm.employment == 2) {
+// WoodChopper
+
+					if(!isWorking){
+						if(!checkForWork){
+							StartCoroutine(WorkCheckDelay(1));
+						}
+					} else {
+						human.SetDestination(curTarget.transform.position);
+						if((transform.position - curTarget.transform.position).magnitude <= 2.5f){
+							RotateTowards(curTarget);
+							if(!isCuttingsTrees){
+								if(!goToStock){
+									StartCoroutine(CuttingsTrees());
+								}
 							}
 						}
-					}
 
-					if((transform.position - curTarget.transform.position).magnitude <= 2.5f && goToStock){
-						isWorking = false;
-						goToStock = false;
-						checkForWork = false;
-						curTarget.GetComponent<StockManager>().AddToStock(this.transform,5);
+						if((transform.position - curTarget.transform.position).magnitude <= 2.5f && goToStock){
+							isWorking = false;
+							goToStock = false;
+							checkForWork = false;
+							curTarget.GetComponent<StockManager>().AddToStock(this.transform,5);
+						}
 					}
-				}
-			} else {
+				} else {
 //Nothing
 
-		}
+			}
+			}
 
-		// Animator
-		if (human.velocity.magnitude >= Speed || human.velocity.magnitude < 0){
-			animator.SetFloat("Move", 1f);
-		}
-		else{
-			animator.SetFloat("Move", human.velocity.magnitude/Speed);
-		}
+// Animator
 
-		//Debug.Log(transform.rotation.eulerAngles);
-		animator.SetFloat("ForBack", human.velocity.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
-		+ human.velocity.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-		animator.SetFloat("LeftRight", human.velocity.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
-		-  human.velocity.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+			if (human.velocity.magnitude >= Speed || human.velocity.magnitude < 0){
+				animator.SetFloat("Move", 1f);
+			}
+			else{
+				animator.SetFloat("Move", human.velocity.magnitude/Speed);
+			}
+
+			animator.SetFloat("ForBack", human.velocity.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+			+ human.velocity.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
+			animator.SetFloat("LeftRight", human.velocity.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+			-  human.velocity.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 		}
 	}
 

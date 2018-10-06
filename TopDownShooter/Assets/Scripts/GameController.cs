@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 
 	public Transform player;
 
-	public Camera cam;
+	public CameraMovement cam;
 	public Image cursor;
 	public Image compas;
 	public GameObject home;
@@ -45,8 +45,10 @@ public class GameController : MonoBehaviour {
 
 	Inventory inventory;
 
+	public Transform unit;
+
 	void Start(){
-		cam = FindObjectOfType<Camera>();
+		cam = FindObjectOfType<CameraMovement>();
 
 		inventory = Inventory.instance;
 
@@ -88,6 +90,19 @@ public class GameController : MonoBehaviour {
 		} else {
 			usingUI.SetActive(false);
 			progessUsing = 0;
+		}
+
+		if(Input.GetKeyDown(KeyCode.F)){
+			cam.isInteraction = !cam.isInteraction;
+
+			if(cam.isInteraction){
+				cam.target = unit;
+				cam.interactionPoint = unit.transform.GetChild(1);
+				unit.GetComponent<HumanController>().isInteracting = true;
+			} else {
+				cam.target = player;
+				unit.GetComponent<HumanController>().isInteracting = false;
+			}
 		}
 
 		if(Input.GetKeyDown(KeyCode.C)){
