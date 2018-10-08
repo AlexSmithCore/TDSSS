@@ -8,9 +8,15 @@ public class ItemDropSystem : MonoBehaviour {
 
 	public int[] simple;
 
+	public Item[] usualItems;
+
 	public Item[] posibleItems;
 
 	public void RandomDrop(){
+		for(int u = 0; u < usualItems.Length; u++){
+			DropItem(usualItems[u], Random.Range(1, usualItems[u].maxDropCount));
+		}
+
 		for(int c = 0; c < itemsDropCount; c++){
 			float result = 0;
 			int greatest = 0;

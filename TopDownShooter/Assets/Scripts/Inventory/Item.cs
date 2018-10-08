@@ -7,9 +7,10 @@ public class Item : ScriptableObject {
 	new public string name = "New Item";
 
 	public enum Type{
-		medical = 0,
-		ammo = 1,
-		weapon = 2,
+		other = 0,
+		medical = 1,
+		ammo = 2,
+		weapon = 3,
 	}
 
 	public Type type;

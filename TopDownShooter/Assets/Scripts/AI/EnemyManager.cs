@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour {
 		health-= damage;
 		ec.isStun = true;
 		ec.stunCounter = ec.stunTime;
-		ec.enemySpeed -= 0.5f;
+		ec.enemySpeed -= 0.25f;
 		animator.SetFloat("isStun", 0.4f);
 		if(!ec.isDetected){
 			ec.enemyTarget = hittedBy;

@@ -14,7 +14,7 @@ MonoBehaviour:
   name: 5.56 Bullets
   type: 1
   icon: {fileID: 21300000, guid: 648ea9bd0a0ed67489cecb1baa7820eb, type: 3}
-  weight: 0.3
+  weight: 0.05
   stackSize: 13
   timeToUse: 0
   maxDropCount: 13

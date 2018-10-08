@@ -1482,7 +1482,7 @@ MonoBehaviour:
   walkSpeed: 3.5
   sleevesPoint: {fileID: 1560285921797568}
   sleeve: {fileID: 1175407696471438, guid: 0ab8096ea427fac4ca06ca9b1c48f293, type: 2}
-  spreadSize: 2
+  spreadSize: 0.5
   gunAmmo: {fileID: 11400000, guid: 34362b2098ea29f478a2b20a5a3dfde0, type: 2}
   ammoCount: 0
   weaponPanel: {fileID: 0}

@@ -68,6 +68,29 @@ public class EnemyController : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
+		if (em.health <= 0){
+			isDead = true;
+			em.Invoke("Death", 2.1f);
+			enemy.enabled = false;
+			coll.enabled = false;
+			animator.Play("Death", 0);
+			return;
+		} else {
+			if(!isAttacking){
+				animator.Play("Base", 0);
+				if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f && !isDetected){
+					point = Random.Range(0, vertices.Length);
+					enemy.SetDestination(vertices[point]);
+				}
+				if (enemy.velocity.magnitude >= speed || enemy.velocity.magnitude < 0){
+					animator.SetFloat("Move", 1f);
+				}
+				else{
+					animator.SetFloat("Move", enemy.velocity.magnitude/speed);
+				}
+			}
+		}
+
 		if(isStun){
 			stunCounter -= Time.deltaTime;
 			if(stunCounter <= 0){
@@ -103,30 +126,6 @@ public class EnemyController : MonoBehaviour {
 		}
 
 		enemy.isStopped = isAttacking;
-
-		if (em.health <= 0){
-			isDead = true;
-			em.Invoke("Death", 2.1f);
-			enemy.isStopped = true;
-			coll.enabled = false;
-			animator.Play("Death", 0);
-		} else {
-			if(!isAttacking){
-				animator.Play("Base", 0);
-				if (Mathf.Sin(2 * Mathf.PI * freq * Time.time + point) > 0.999f && !isDetected){
-					point = Random.Range(0, vertices.Length);
-					enemy.SetDestination(vertices[point]);
-				}
-				if (enemy.velocity.magnitude >= speed || enemy.velocity.magnitude < 0){
-					animator.SetFloat("Move", 1f);
-				}
-				else{
-					animator.SetFloat("Move", enemy.velocity.magnitude/speed);
-				}
-			}
-		}
-
-		enemy.speed = enemySpeed;
 	}
 
 	IEnumerator FindTargetsWithDelay(float delay) {
@@ -157,6 +156,7 @@ public class EnemyController : MonoBehaviour {
 		if(count == 0){
 			isDetected = false;
 		}
+		enemy.speed = enemySpeed;
 	}
 
 	public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {
