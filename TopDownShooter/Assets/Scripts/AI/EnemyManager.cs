@@ -25,7 +25,7 @@ public class EnemyManager : MonoBehaviour {
 		ec.isStun = true;
 		ec.stunCounter = ec.stunTime;
 		ec.enemySpeed -= 0.5f;
-		animator.SetFloat("isStun", 0.3f);
+		animator.SetFloat("isStun", 0.4f);
 		if(!ec.isDetected){
 			ec.enemyTarget = hittedBy;
 			ec.isDetected = true;
@@ -33,6 +33,7 @@ public class EnemyManager : MonoBehaviour {
 	}
 
 	public void Death(){
+		GetComponent<ItemDropSystem>().RandomDrop();
 		Destroy(this.gameObject);
 	}
 }

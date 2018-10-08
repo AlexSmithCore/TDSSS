@@ -21,6 +21,8 @@ public class Item : ScriptableObject {
 
 	public int timeToUse;
 
+	public int maxDropCount;
+
 	public Color itemColor;
 
 
@@ -41,7 +43,7 @@ public class Item : ScriptableObject {
 
 		if(name == "Bandage"){
 			Inventory.instance.RemoveItem(this);
-			Debug.Log("Removed Bandage");
+			Inventory.instance.owner.GetComponent<BloodSystem>().bleedingCount--;
 		}
 	}
 	

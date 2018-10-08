@@ -190,7 +190,7 @@ public class EnemyController : MonoBehaviour {
   		{
 			hit.collider.GetComponent<BloodSystem>().bloodCount -= 1000f;
 			if (hit.collider.tag != "Player"){
-				hit.collider.GetComponent<HumanController>().HitReaction(0.5f);
+				hit.collider.GetComponent<HumanController>().HitReaction(0.5f, this.transform);
 				//hit.collider.GetComponent<HumanController>().Invoke("HitReaction(0)", 1f);
 			}
 			float rand = Random.Range(0f,100f);

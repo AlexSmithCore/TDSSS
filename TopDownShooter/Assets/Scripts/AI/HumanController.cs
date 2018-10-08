@@ -81,7 +81,7 @@ public class HumanController : MonoBehaviour {
 		human = GetComponent<NavMeshAgent>();
 		mainTarget = GameObject.FindGameObjectWithTag("Player").transform;
 		curTarget = mainTarget;
-		StartCoroutine ("FindTargetsWithDelay", .5f);
+		StartCoroutine ("FindTargetsWithDelay", 1f);
 	}
 
 	
@@ -289,8 +289,10 @@ public class HumanController : MonoBehaviour {
 	 	return stocks[m].transform;
 	}
 
-	public void HitReaction(float value){
+	public void HitReaction(float value, Transform enemy){
 		animator.SetFloat("Hit", value);
+		isDetected = true;
+		enemyTarget = enemy;
 	}
 
 }

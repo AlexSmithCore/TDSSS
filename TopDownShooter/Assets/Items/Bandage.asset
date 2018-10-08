@@ -17,6 +17,7 @@ MonoBehaviour:
   weight: 0.1
   stackSize: 8
   timeToUse: 3
+  maxDropCount: 3
   itemColor: {r: 1, g: 0, b: 0, a: 0.6117647}
   prefab: {fileID: 1916233790753250, guid: 7ae09e6e68bc29549985bf61b4f0d8c0, type: 2}
   description: A product made of different types of fabrics, which differ in density,

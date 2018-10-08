@@ -30,10 +30,6 @@ public class PlayerControl : MonoBehaviour {
 
 	public float walkSpeed;
 
-	public int[] simple;
-
-	public string[] itemName;
-
 	public GameObject sleevesPoint;
 	public GameObject sleeve;
 
@@ -67,7 +63,7 @@ public class PlayerControl : MonoBehaviour {
 	void FixedUpdate()
 	{
 		if(!isFreeze){
-			rb.MovePosition(rb.position + _inputs * playerSpeed * Time.fixedDeltaTime);
+			rb.MovePosition(rb.position + _inputs.normalized * playerSpeed * Time.fixedDeltaTime);
 		}
 	}
 
@@ -125,26 +121,7 @@ public class PlayerControl : MonoBehaviour {
 			newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
 			}
 		}
-
-		RandomDrop();
 		}
-	}
-
-	void RandomDrop(){
-		if(Input.GetKeyDown(KeyCode.R)){
-			float result = 0;
-			int greatest = 0;
-			float rand = (float)Random.Range(11, 53);
-			for(int i = 0; i < simple.Length; i++){
-				result = rand / simple[i]; 
-				if (result - Mathf.Floor(result) == 0) 
-				{ 
-					greatest = i; 
-				}
-			}
-
-			Debug.Log("Выпало: " + itemName[greatest]);
-		}	
 	}
 
 	void ShootEffect(){

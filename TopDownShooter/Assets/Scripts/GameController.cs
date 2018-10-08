@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour {
 			progessUsing = 0;
 		}
 
-		if(Input.GetKeyDown(KeyCode.F)){
+		/*if(Input.GetKeyDown(KeyCode.F)){
 			cam.isInteraction = !cam.isInteraction;
 
 			if(cam.isInteraction){
@@ -103,7 +103,7 @@ public class GameController : MonoBehaviour {
 				cam.target = player;
 				unit.GetComponent<HumanController>().isInteracting = false;
 			}
-		}
+		}*/
 
 		if(Input.GetKeyDown(KeyCode.C)){
 			inventory.selectedSlot = 0;

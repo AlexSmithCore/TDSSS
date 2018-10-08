@@ -536,6 +536,7 @@ GameObject:
   - component: {fileID: 114411623829635980}
   - component: {fileID: 195421789945099360}
   - component: {fileID: 114077851134659998}
+  - component: {fileID: 114426506998277424}
   m_Layer: 12
   m_Name: Zombie
   m_TagString: Enemy
@@ -1934,13 +1935,13 @@ MonoBehaviour:
   isStun: 0
   isAttacking: 0
   distToAttack: 2
-  stunTime: 1
+  stunTime: 0.25
   stunCounter: 0
   enemySpeed: 4
-  attackInterval: 2
+  attackInterval: 1.5
   point: 0
   freq: 0.1
-  speed: 4
+  speed: 6
   viewRadius: 16
   viewAngle: 270
   targetMask:
@@ -1953,7 +1954,23 @@ MonoBehaviour:
   curTarget: {fileID: 0}
   enemyTarget: {fileID: 0}
   hitPoint: {fileID: 1650344026731912}
-  damage: 0
+--- !u!114 &114426506998277424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538498305022488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644bc6482c324b74c950d68844e10698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsDropCount: 5
+  simple: 030000000d00000011000000
+  posibleItems:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 34362b2098ea29f478a2b20a5a3dfde0, type: 2}
+  - {fileID: 11400000, guid: 66aede5091596ba4c8f873e555f3de9d, type: 2}
 --- !u!136 &136945440838167100
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2068,7 +2085,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.7
-  m_Speed: 4
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour {
 	public bool isRightClick;
 
 	public bool Add(Item item, int iCount){
-		if(items.Count >= invSpace){
+		if(items.Count >= invSpace && (weight + item.weight) * iCount < maxWeight){
 			Debug.Log("Not enoght space!");
 			return false;
 		}
@@ -85,6 +85,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void RemoveAllItem(int id){
+		weight -= items[id].item.weight * items[id].count;
 		items.Remove(items[id]);
 	}
 
