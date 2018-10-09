@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 665606118}
-  m_IndirectSpecularColor: {r: 0.05496509, g: 0.10607461, b: 0.24568602, a: 1}
+  m_IndirectSpecularColor: {r: 0.06444541, g: 0.12314677, b: 0.28718367, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -33820,6 +33820,7 @@ GameObject:
   - component: {fileID: 1623126435}
   - component: {fileID: 1623126434}
   - component: {fileID: 1623126433}
+  - component: {fileID: 1623126437}
   m_Layer: 0
   m_Name: Landscape
   m_TagString: Untagged
@@ -33895,6 +33896,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1623126437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1623126432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc80dc32fb997749a304c471342db79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: e24a02ba2e6dfb748853f16de915ebde, type: 2}
+  delta: 4
 --- !u!1 &1626628730
 GameObject:
   m_ObjectHideFlags: 0
