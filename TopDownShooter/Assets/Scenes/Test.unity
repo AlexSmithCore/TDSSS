@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 665606118}
-  m_IndirectSpecularColor: {r: 0.061477393, g: 0.1178253, b: 0.27450305, a: 1}
+  m_IndirectSpecularColor: {r: 0.07423325, g: 0.14053667, b: 0.32705536, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -18896,7 +18896,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  fogScale: 0.035
+  fogScale: 0
   dayAtmosphereThickness: 0.4
   nightAtmosphereThickness: 0.87
   dayRotateSpeed: {x: 24, y: 0, z: 0}
@@ -22018,12 +22018,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1011479220}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b96c40446cf69c45abf15cc22d49f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  R: 1
+  R: 0.01
   GRAIN: 8
   FLAT: 0
   material: {fileID: 2100000, guid: e24a02ba2e6dfb748853f16de915ebde, type: 2}
@@ -33890,8 +33890,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1623126432}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 130.37178, y: 0, z: 135.48575}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -33908,7 +33908,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: e24a02ba2e6dfb748853f16de915ebde, type: 2}
-  delta: 4
+  delta: 150
+  R: 0.7
 --- !u!1 &1626628730
 GameObject:
   m_ObjectHideFlags: 0
