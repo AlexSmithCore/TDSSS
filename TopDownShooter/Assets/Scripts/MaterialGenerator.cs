@@ -9,7 +9,7 @@ public class MaterialGenerator : MonoBehaviour {
 	public float delta = 1f;
 	public float R = 1f;
 
-	private int width=4096;
+	private int width=1024;
 	private int widthMesh=256;
 	private Color[] pix;
 	private Texture2D noiseTex;
@@ -51,7 +51,7 @@ public class MaterialGenerator : MonoBehaviour {
 					
 					j += 6;
 				}
-				uv[i * widthMesh + k] = new Vector2(vertices[i * widthMesh + k].x, vertices[i * widthMesh + k].z);
+				uv[i * widthMesh + k] = new Vector2(vertices[i * widthMesh + k].x / widthMesh, vertices[i * widthMesh + k].z / widthMesh);
 			}
 		}
 
