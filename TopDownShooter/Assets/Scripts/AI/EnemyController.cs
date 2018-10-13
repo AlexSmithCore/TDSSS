@@ -52,6 +52,8 @@ public class EnemyController : MonoBehaviour {
 	public GameObject hitPoint;
 	RaycastHit hit;
 
+	public Collider deadCollider;
+
 	void Start () {
 		animator = GetComponent<Animator>();
 		enemy = GetComponent<NavMeshAgent>();
@@ -64,15 +66,17 @@ public class EnemyController : MonoBehaviour {
 		enemy.SetDestination(vertices[point]);
 
 		freq = Random.Range(0.01f, freq);
-		StartCoroutine ("FindTargetsWithDelay", .5f);
+		StartCoroutine ("FindTargetsWithDelay", 1f);
 	}
 	
 	void FixedUpdate () {
 		if (em.health <= 0){
 			isDead = true;
-			em.Invoke("Death", 2.1f);
+			//em.Invoke("Death", 2.1f);
 			enemy.enabled = false;
 			coll.enabled = false;
+			deadCollider.enabled = true;
+			GetComponent<InteractionSystem>().enabled = true;
 			animator.Play("Death", 0);
 			return;
 		} else {

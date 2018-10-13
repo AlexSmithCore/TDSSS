@@ -10,14 +10,15 @@ public class EnemyManager : MonoBehaviour {
 
 	private EnemyController ec;
 
+	public List<Slot> dropItems = new List<Slot>();
+
 	void Start(){
 		ec = GetComponent<EnemyController>();
 		animator = GetComponent<Animator>();
 	}
  
 	void Update(){
-		if(health<=0){
-		}
+		
 	}
 
 	public void Hurt(int damage, Transform hittedBy){

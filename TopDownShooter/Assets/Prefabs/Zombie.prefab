@@ -537,6 +537,8 @@ GameObject:
   - component: {fileID: 195421789945099360}
   - component: {fileID: 114077851134659998}
   - component: {fileID: 114426506998277424}
+  - component: {fileID: 65480242240604954}
+  - component: {fileID: 114889422389065982}
   m_Layer: 12
   m_Name: Zombie
   m_TagString: Enemy
@@ -1890,6 +1892,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1112685981897130}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65480242240604954
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538498305022488}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 6, y: 3, z: 6}
+  m_Center: {x: 0, y: 0, z: -4.25}
 --- !u!95 &95722903629674838
 Animator:
   serializedVersion: 3
@@ -1954,6 +1968,7 @@ MonoBehaviour:
   curTarget: {fileID: 0}
   enemyTarget: {fileID: 0}
   hitPoint: {fileID: 1650344026731912}
+  deadCollider: {fileID: 65480242240604954}
 --- !u!114 &114426506998277424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1974,6 +1989,22 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 11400000, guid: 34362b2098ea29f478a2b20a5a3dfde0, type: 2}
   - {fileID: 11400000, guid: 66aede5091596ba4c8f873e555f3de9d, type: 2}
+--- !u!114 &114889422389065982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1538498305022488}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8ce6ce8afb70043846315d22cb007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interacted: 0
+  materialsBody: {fileID: 1797891796624984}
+  _material: {fileID: 0}
+  _interactColor: {r: 1, g: 0.6, b: 0, a: 1}
+  _disableColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!136 &136945440838167100
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2002,7 +2033,6 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: b38494d9a542de449be9429ebc6df909, type: 2}
-  - {fileID: 2100000, guid: 54eb632dd22672849a3008dedce2e266, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

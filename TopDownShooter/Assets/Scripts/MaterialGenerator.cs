@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MaterialGenerator : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class MaterialGenerator : MonoBehaviour {
 	private int widthMesh=256;
 	private Color[] pix;
 	private Texture2D noiseTex;
+
+	public NavMeshSurface nms;
 	
 	void Start () {
 
@@ -65,6 +68,8 @@ public class MaterialGenerator : MonoBehaviour {
 		mr.material = material;
 
 		col.sharedMesh = mesh;
+
+		nms.BuildNavMesh();
 	}
 
 	void CalcNoise() {

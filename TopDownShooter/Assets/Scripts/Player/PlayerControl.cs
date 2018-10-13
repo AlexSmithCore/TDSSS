@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
+
+	public bool isInteracting;
 	public bool isAim;
 
 	public bool isFreeze;
+
+	public bool isSearching;
 
 	public BulletController bullet;
 
@@ -45,6 +49,15 @@ public class PlayerControl : MonoBehaviour {
 
 	public GameObject weaponPanel;
 
+	public LayerMask interactMask;
+
+	public GameObject nearestObject;
+	public InteractionSystem interactingObject;
+
+	public GameObject interactionPanel;
+
+	public GameObject interactionInventory;
+
 	void Start()
 	{
 		inventory = Inventory.instance;
@@ -65,11 +78,48 @@ public class PlayerControl : MonoBehaviour {
 		if(!isFreeze){
 			rb.MovePosition(rb.position + _inputs.normalized * playerSpeed * Time.fixedDeltaTime);
 		}
+
+		RaycastHit hit;
+		if(Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit,1f,interactMask,QueryTriggerInteraction.UseGlobal) && !isInteracting){
+			if(hit.transform.GetComponent<InteractionSystem>().enabled){
+				interactingObject = hit.transform.GetComponent<InteractionSystem>();
+				interactingObject.interacted = true;
+				interactingObject.Interact();
+				isInteracting = true;
+				interactionPanel.SetActive(true);
+			}
+		}
 	}
 
 	void Update()
 	{
+		if(interactingObject != null){
+			float dist = Vector3.Distance(transform.position + transform.forward, interactingObject.transform.position);
+			if(dist > 1.75f){
+				interactingObject.interacted = false;
+				interactingObject.Interact();
+				isInteracting = false;
+				interactingObject = null;
+				interactionPanel.SetActive(false);
+				interactionInventory.SetActive(false);
+			}
+		}
+
+		_inputs = Vector3.zero;
+
+		if(isInteracting){
+			interactionPanel.transform.position = mainCamera.WorldToScreenPoint(interactingObject.transform.position + Vector3.up * 3f);
+			if(Input.GetKeyDown(KeyCode.F)){
+				isSearching = !isSearching;
+				interactionInventory.SetActive(isSearching);
+			}
+			if(isSearching)
+				return;
+		}
+
 		if(!isFreeze){
+			isAim = Input.GetMouseButton(1);
+
 			Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
 			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 			float rayLenght;
@@ -79,7 +129,6 @@ public class PlayerControl : MonoBehaviour {
 				transform.LookAt(pointToLook);
 			}
 
-			_inputs = Vector3.zero;
 			_inputs.x = Input.GetAxis("Horizontal");
 			_inputs.z = Input.GetAxis("Vertical");
 			
@@ -89,8 +138,6 @@ public class PlayerControl : MonoBehaviour {
 			+ _inputs.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 			animator.SetFloat("LeftRight", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
 			- _inputs.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-
-			isAim = Input.GetMouseButton(1);
 
 // Reload
 		if(Input.GetKeyDown(KeyCode.R)){
@@ -102,7 +149,13 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if(Input.GetMouseButtonDown(0)){
-			if(isAim && ammoCount > 0){
+			Shoot();
+		}
+		}
+	}
+
+	private void Shoot(){
+		if(isAim && ammoCount > 0){
 			//shotCounter -= Time.deltaTime;
 			currentAmmo.count--;
 			UpdateWeaponUI();
@@ -119,8 +172,6 @@ public class PlayerControl : MonoBehaviour {
 			newBullet.parent = transform;
 			GameObject newSleeve = Instantiate(sleeve, sleevesPoint.transform.position, Random.rotation);
 			newSleeve.GetComponent<Rigidbody>().AddForce(transform.right * 64);
-			}
-		}
 		}
 	}
 
@@ -165,6 +216,12 @@ public class PlayerControl : MonoBehaviour {
 				weaponPanel.transform.GetChild(5).GetChild(i).gameObject.SetActive(true);
 			}
 		}
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, 1f);
 	}
 	
 }

@@ -14,7 +14,7 @@ public class ItemDropSystem : MonoBehaviour {
 
 	public void RandomDrop(){
 		for(int u = 0; u < usualItems.Length; u++){
-			DropItem(usualItems[u], Random.Range(1, usualItems[u].maxDropCount));
+			//DropItem(usualItems[u], Random.Range(1, usualItems[u].maxDropCount));
 		}
 
 		for(int c = 0; c < itemsDropCount; c++){
@@ -31,7 +31,7 @@ public class ItemDropSystem : MonoBehaviour {
 
 			if(greatest > 0){
 				Debug.Log("Выпало: " + posibleItems[greatest].name);
-				DropItem(posibleItems[greatest], Random.Range(1, posibleItems[greatest].maxDropCount));
+				//DropItem(posibleItems[greatest], Random.Range(1, posibleItems[greatest].maxDropCount));
 			} else {
 				Debug.Log("Ничего не выпало!");
 			}
