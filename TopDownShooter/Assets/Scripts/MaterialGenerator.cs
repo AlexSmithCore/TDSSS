@@ -74,10 +74,10 @@ public class MaterialGenerator : MonoBehaviour {
 
 	void CalcNoise() {
         float y = 0.0F;
-		float ranR = Random.Range(1f, 3f);
-		float ranG = Random.Range(4f, 6f);
-		float ranB = Random.Range(7f, 9f);
-		float ranA = Random.Range(10f, 12f);
+		float ranR = Random.Range(1f, 2f);
+		float ranG = Random.Range(1f, 2f);
+		float ranB = Random.Range(1f, 2f);
+		float ranA = Random.Range(1f, 2f);
 		Debug.Log(ranR + " " + ranG + " " + ranB + " " + ranA);
         while (y < noiseTex.height) {
             float x = 0.0F;
@@ -99,6 +99,6 @@ public class MaterialGenerator : MonoBehaviour {
     }
 
 	float Func(float a, float b, float c, float d){
-		return Mathf.Pow(Mathf.Sin(a * c / 5 - (Mathf.Cos(b) + 2) * d * Mathf.PerlinNoise(a, b)), 2);
+		return Mathf.Pow(Mathf.Sin((Mathf.Sin(b + d) + 2) * a * c / 10 - (Mathf.Cos(b + c) + 2) * d * Mathf.PerlinNoise(a, b)), 2) * (1 - 0.5f * Mathf.PerlinNoise(a * c / 12f, b * d / 12f));
 	}
 }
