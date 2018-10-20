@@ -74,20 +74,20 @@ public class MaterialGenerator : MonoBehaviour {
 
 	void CalcNoise() {
         float y = 0.0F;
-		float ranR = Random.Range(0.1f, 2f);
-		float ranG = Random.Range(0.1f, 2f);
-		float ranB = Random.Range(0.1f, 2f);
-		float ranA = Random.Range(0.1f, 2f);
+		float ranR = Random.Range(1f, 3f);
+		float ranG = Random.Range(4f, 6f);
+		float ranB = Random.Range(7f, 9f);
+		float ranA = Random.Range(10f, 12f);
 		Debug.Log(ranR + " " + ranG + " " + ranB + " " + ranA);
         while (y < noiseTex.height) {
             float x = 0.0F;
             while (x < noiseTex.width) {
                 //float xCoord = x / noiseTex.width * delta;
                 //float yCoord = y / noiseTex.height * delta;
-                float sampleR = Func(x / delta, y / delta, ranR, ranG);
-				float sampleG = Func(x / delta, y / delta, ranG, ranB);
-				float sampleB = Func(x / delta, y / delta, ranB, ranA);
-				float sampleA = Func(x / delta, y / delta, ranA, ranR);
+                float sampleR = Func((x - noiseTex.width / 2) / delta, (y - noiseTex.height / 2) / delta, ranR, ranG);
+				float sampleG = Func((x - noiseTex.width / 2) / delta, (y - noiseTex.height / 2) / delta, ranG, ranB);
+				float sampleB = Func((x - noiseTex.width / 2) / delta, (y - noiseTex.height / 2) / delta, ranB, ranA);
+				float sampleA = Func((x - noiseTex.width / 2) / delta, (y - noiseTex.height / 2) / delta, ranA, ranR);
                 pix[(int)(y * noiseTex.width + x)] = new Color(sampleR, sampleG, sampleB, sampleA);
 
                 x++;
@@ -99,6 +99,6 @@ public class MaterialGenerator : MonoBehaviour {
     }
 
 	float Func(float a, float b, float c, float d){
-		return Mathf.Pow(Mathf.Sin(c * a * Mathf.PerlinNoise(a, b)), 2) * Mathf.Pow(Mathf.Sin(d * b * Mathf.PerlinNoise(b, a)), 2);
+		return Mathf.Pow(Mathf.Sin(a * c / 5 - (Mathf.Cos(b) + 2) * d * Mathf.PerlinNoise(a, b)), 2);
 	}
 }
