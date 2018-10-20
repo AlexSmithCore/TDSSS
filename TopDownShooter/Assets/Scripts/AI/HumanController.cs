@@ -242,7 +242,8 @@ public class HumanController : MonoBehaviour {
 					count++;
 					visibleTargets.Add (target);
 					enemyTarget = GetClosestGO(transform.position,targetsInViewRadius);
-					isDetected = !enemyTarget.GetComponent<EnemyController>().isDead;
+					if(!enemyTarget.GetComponent<EnemyController>().isDead){ isDetected = true;} else { isDetected = false; }
+					//isDetected = !enemyTarget.GetComponent<EnemyController>().isDead;
 				}
 			}
 		}

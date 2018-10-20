@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Name: Cobra 9
   m_EditorClassIdentifier: 
   name: Cobra 9
-  type: 2
+  type: 3
   icon: {fileID: 21300000, guid: 80847cb007c405d40bf7a688b8f5e819, type: 3}
   weight: 0.8
   stackSize: 1
   timeToUse: 0
   maxDropCount: 1
   itemColor: {r: 0, g: 0.67058825, b: 1, a: 0.6117647}
+  timeToPick: 2
   prefab: {fileID: 1703319405821548, guid: 76f4c0750b22e5648b2c96b268be14d5, type: 2}
   description: 
-  canWear: 1
+  canWear: 0
   canUse: 0
+  isWeapon: 1
+  capacity: 13
+  ammoItem: {fileID: 11400000, guid: 34362b2098ea29f478a2b20a5a3dfde0, type: 2}

@@ -14,19 +14,11 @@ public class ParallaxSystem : MonoBehaviour {
 
 	#endregion
 
-	void Awake(){
-		DontDestroyOnLoad(gameObject);
-	}
-
 	void Update(){
 		float x = Input.GetAxisRaw("Mouse X") * p_Speed;
 		Vector3 parallaxPosition = Vector3.ClampMagnitude(Vector3.right * x * Time.deltaTime, p_ParallaxClamp);
+		parallaxPosition.y = p_Background.position.y;
 		Vector3 smoothParallax = Vector3.SmoothDamp(p_Background.position, parallaxPosition, ref velocity, p_Smooth);
 		p_Background.position = smoothParallax;
-	}
-
-	public IEnumerator Play(){
-		yield return new WaitForSeconds(5f);
-		Application.LoadLevel(2);
 	}
 }

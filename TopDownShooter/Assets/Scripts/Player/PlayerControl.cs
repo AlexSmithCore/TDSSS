@@ -12,6 +12,8 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool isSearching;
 
+	public bool isRoll;
+
 	public BulletController bullet;
 
 	public float bulletSpeed;
@@ -57,9 +59,14 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject interactionPanel;
 
 	public GameObject interactionInventory;
+	public float checkDistance;
+
+	public GameController gc;
 
 	void Start()
 	{
+		gc = FindObjectOfType<GameController>();
+
 		inventory = Inventory.instance;
 		rb = GetComponent<Rigidbody>();
 		animator = GetComponent<Animator>();
@@ -79,7 +86,7 @@ public class PlayerControl : MonoBehaviour {
 			rb.MovePosition(rb.position + _inputs.normalized * playerSpeed * Time.fixedDeltaTime);
 		}
 
-		RaycastHit hit;
+		/*RaycastHit hit;
 		if(Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit,1f,interactMask,QueryTriggerInteraction.UseGlobal) && !isInteracting){
 			if(hit.transform.GetComponent<InteractionSystem>().enabled){
 				interactingObject = hit.transform.GetComponent<InteractionSystem>();
@@ -88,33 +95,43 @@ public class PlayerControl : MonoBehaviour {
 				isInteracting = true;
 				interactionPanel.SetActive(true);
 			}
-		}
+		}*/
 	}
 
 	void Update()
 	{
+		if(Input.GetKeyDown(KeyCode.Space) && !isRoll){
+			isRoll = true;
+		}
+
+		if(isRoll){
+			animator.Play("Roll");
+			return;
+		}
+
 		if(interactingObject != null){
-			float dist = Vector3.Distance(transform.position + transform.forward, interactingObject.transform.position);
-			if(dist > 1.75f){
+			float dist = Vector3.Distance(transform.position + transform.forward, interactingObject.interactionPoint.position);
+			if(dist > checkDistance){
 				interactingObject.interacted = false;
 				interactingObject.Interact();
 				isInteracting = false;
 				interactingObject = null;
 				interactionPanel.SetActive(false);
 				interactionInventory.SetActive(false);
+				isSearching = false;
 			}
 		}
 
 		_inputs = Vector3.zero;
 
 		if(isInteracting){
-			interactionPanel.transform.position = mainCamera.WorldToScreenPoint(interactingObject.transform.position + Vector3.up * 3f);
 			if(Input.GetKeyDown(KeyCode.F)){
-				isSearching = !isSearching;
+				gc.HideCursor(!isSearching);
+				isSearching = !interactionInventory.activeInHierarchy;
 				interactionInventory.SetActive(isSearching);
+				FindObjectOfType<InteractionController>().iSys = interactingObject;
+				FindObjectOfType<InventoryUI>().UpdateInteractionUI();
 			}
-			if(isSearching)
-				return;
 		}
 
 		if(!isFreeze){
@@ -123,16 +140,31 @@ public class PlayerControl : MonoBehaviour {
 			Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
 			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 			float rayLenght;
-			if(groundPlane.Raycast(cameraRay, out rayLenght)){
+			if(groundPlane.Raycast(cameraRay, out rayLenght) && !isSearching){
 				pointToLook = cameraRay.GetPoint(rayLenght);
 				pointToLook.Set(pointToLook.x, transform.position.y, pointToLook.z);
 				transform.LookAt(pointToLook);
 			}
 
+			RaycastHit hit;
+			 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, checkDistance,interactMask) && !isInteracting){
+				if(hit.transform.GetComponent<InteractionSystem>().enabled){
+					Debug.Log("Interacting!");
+					interactingObject = hit.transform.GetComponent<InteractionSystem>();
+					isInteracting = true;
+					interactingObject.interacted = isInteracting;
+					interactingObject.Interact();
+					interactionPanel.SetActive(isInteracting);
+				}
+			 }
+
+			 animator.Play("Base");
+
 			_inputs.x = Input.GetAxis("Horizontal");
 			_inputs.z = Input.GetAxis("Vertical");
 			
 			animator.SetFloat("Move", _inputs.normalized.magnitude);
+			//animator.Play("Pistol");
 
 			animator.SetFloat("BackFor", + _inputs.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
 			+ _inputs.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
@@ -162,7 +194,7 @@ public class PlayerControl : MonoBehaviour {
 			shootLight.enabled = true;
 			PS_shoot.SetActive(true);
 			Invoke("ShootEffect", .1f);
-			shotCounter = interval - Random.Range(0f,0.3f);
+			//shotCounter = interval - Random.Range(0f,0.3f);
 			float xSpread = Random.Range(-1, 1);
 			float ySpread = Random.Range(-1, 1);
 			Vector3 spread = new Vector3(xSpread, ySpread, 0.0f).normalized * spreadSize;
@@ -200,28 +232,25 @@ public class PlayerControl : MonoBehaviour {
 		if(currentAmmo != null){
 			ammoCount = currentAmmo.count;
 		}
-		weaponPanel.transform.GetChild(4).GetComponent<Text>().text = ammoCount + "";
+		weaponPanel.transform.GetChild(3).GetComponent<Text>().text = ammoCount + "";
 		if(ammoCount <= 0){
-			weaponPanel.transform.GetChild(6).gameObject.SetActive(true);
-			weaponPanel.transform.GetChild(5).gameObject.SetActive(false);
+			weaponPanel.transform.GetChild(5).gameObject.SetActive(true);
+			weaponPanel.transform.GetChild(4).gameObject.SetActive(false);
 			return;
 		}
 
-		weaponPanel.transform.GetChild(6).gameObject.SetActive(false);
-		weaponPanel.transform.GetChild(5).gameObject.SetActive(true);
-		for(int i = 0; i < weaponPanel.transform.GetChild(5).childCount; i++){
+		weaponPanel.transform.GetChild(5).gameObject.SetActive(false);
+		weaponPanel.transform.GetChild(4).gameObject.SetActive(true);
+		for(int i = 0; i < weaponPanel.transform.GetChild(4).childCount; i++){
 			if(i >= ammoCount){
-				weaponPanel.transform.GetChild(5).GetChild(i).gameObject.SetActive(false);
+				weaponPanel.transform.GetChild(4).GetChild(i).gameObject.SetActive(false);
 			} else {
-				weaponPanel.transform.GetChild(5).GetChild(i).gameObject.SetActive(true);
+				weaponPanel.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
 			}
 		}
 	}
 
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, 1f);
+	public void EndRoll(){
+		isRoll = false;
 	}
-	
 }

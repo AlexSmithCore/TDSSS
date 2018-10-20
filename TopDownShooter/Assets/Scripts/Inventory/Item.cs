@@ -11,6 +11,7 @@ public class Item : ScriptableObject {
 		medical = 1,
 		ammo = 2,
 		weapon = 3,
+		melee = 4,
 	}
 
 	public Type type;
@@ -26,6 +27,8 @@ public class Item : ScriptableObject {
 
 	public Color itemColor;
 
+	public float timeToPick;
+
 
 	public GameObject prefab;
 
@@ -36,6 +39,13 @@ public class Item : ScriptableObject {
 	[Space]
 	public bool canWear;
 	public bool canUse;
+
+	[Header("Weapon Settings")]
+	[Space]
+	public bool isWeapon;
+	public int capacity;
+
+	public Item ammoItem;
 
 	Inventory inv;
 

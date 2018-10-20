@@ -97,7 +97,7 @@ public class BloodSystem : MonoBehaviour {
 			GameObject puddle = Instantiate(bloodPuddle, new Vector3(transform.position.x + Random.Range(-0.5f, 0.5f),0.01f,transform.position.z + Random.Range(-0.5f, 0.5f)), transform.rotation);
 			int rand = Random.Range(0, bloodTextures.Length);
 			puddle.GetComponent<Renderer>().material.SetTexture("_MainTex", bloodTextures[rand]);
-			yield return new WaitForSeconds(Random.Range(0f,TimerSet()));
+			yield return new WaitForSeconds(Random.Range(0f,1.5f));
 			StartCoroutine(BloodyRiver());
 		}
 	}
@@ -107,27 +107,6 @@ public class BloodSystem : MonoBehaviour {
 			GameObject puddle = Instantiate(bloodPuddle, new Vector3(transform.position.x + Random.Range(-0.5f, 0.5f),0.01f,transform.position.z + Random.Range(-0.5f, 0.5f)), transform.rotation);
 			int rand = Random.Range(0, bloodTextures.Length);
 			puddle.GetComponent<Renderer>().material.SetTexture("_MainTex", bloodTextures[rand]);
-		}
-	}
-
-	float TimerSet(){
-		switch(bleedingCount)
-		{
-			case 1:
-				return 3f;
-				break;
-			case 2: 
-				return 2.5f;
-				break;
-			case 3:
-				return 2f;
-				break;
-			case 4:
-				return 1f;
-				break;
-			default:
-				return 0.5f;
-				break;
 		}
 	}
 

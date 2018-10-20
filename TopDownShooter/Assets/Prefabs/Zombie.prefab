@@ -894,6 +894,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1896767557893372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4594216508260744}
+  m_Layer: 12
+  m_Name: InteractionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1901132738140652
 GameObject:
   m_ObjectHideFlags: 1
@@ -1420,6 +1435,19 @@ Transform:
   m_Father: {fileID: 4461284441984864}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4594216508260744
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896767557893372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4886095093989140}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4598804517626728
 Transform:
   m_ObjectHideFlags: 1
@@ -1683,6 +1711,7 @@ Transform:
   - {fileID: 4358143140330884}
   - {fileID: 4368091792778132}
   - {fileID: 4221607303126570}
+  - {fileID: 4594216508260744}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -1902,8 +1931,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 3, z: 6}
-  m_Center: {x: 0, y: 0, z: -4.25}
+  m_Size: {x: 6.5, y: 3, z: 6.5}
+  m_Center: {x: 1, y: 0, z: -4.25}
 --- !u!95 &95722903629674838
 Animator:
   serializedVersion: 3
@@ -1989,6 +2018,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 11400000, guid: 34362b2098ea29f478a2b20a5a3dfde0, type: 2}
   - {fileID: 11400000, guid: 66aede5091596ba4c8f873e555f3de9d, type: 2}
+  iSys: {fileID: 0}
 --- !u!114 &114889422389065982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2001,10 +2031,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interacted: 0
+  interactionPoint: {fileID: 4594216508260744}
   materialsBody: {fileID: 1797891796624984}
   _material: {fileID: 0}
   _interactColor: {r: 1, g: 0.6, b: 0, a: 1}
   _disableColor: {r: 1, g: 1, b: 1, a: 0}
+  dropItems: []
+  itemsSpace: 20
+  weight: 0
+  maxWeight: 40
+  interactionParent: {fileID: 0}
 --- !u!136 &136945440838167100
 CapsuleCollider:
   m_ObjectHideFlags: 1

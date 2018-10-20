@@ -92,27 +92,13 @@ public class GameController : MonoBehaviour {
 			progessUsing = 0;
 		}
 
-		/*if(Input.GetKeyDown(KeyCode.F)){
-			cam.isInteraction = !cam.isInteraction;
-
-			if(cam.isInteraction){
-				cam.target = unit;
-				cam.interactionPoint = unit.transform.GetChild(1);
-				unit.GetComponent<HumanController>().isInteracting = true;
-			} else {
-				cam.target = player;
-				unit.GetComponent<HumanController>().isInteracting = false;
-			}
-		}*/
-
 		if(Input.GetKeyDown(KeyCode.C)){
 			inventory.selectedSlot = 0;
 			inventory.isRightClick = false;
 			inventory.onItemChangedCallBack.Invoke();
 			isWeaponPick = !isWeaponPick;
 			weaponPickPanel.SetActive(isWeaponPick);
-			Cursor.visible = isWeaponPick;
-			cursor.gameObject.SetActive(!isWeaponPick);
+			HideCursor(isWeaponPick);
 
 			//player.GetComponent<TemperaturesController>().ChangeTemperature();
 
@@ -162,6 +148,11 @@ public class GameController : MonoBehaviour {
 		if(isWeaponPick)
 		compas.transform.rotation = Quaternion.Euler(0,0,Mathf.Lerp(compas.transform.eulerAngles.z,playerLastRot, Time.unscaledDeltaTime * 10f));
 	
+	}
+
+	public void HideCursor(bool hide){
+		Cursor.visible = hide;
+		cursor.gameObject.SetActive(!hide);
 	}
 
 	private float CheckAngle(float angle){

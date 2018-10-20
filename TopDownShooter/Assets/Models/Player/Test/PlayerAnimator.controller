@@ -186,6 +186,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &1102751843525710662
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Roll
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 7730cdf9b05f4fb43996b5115b32987a, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1107 &1107456817738190890
 AnimatorStateMachine:
   serializedVersion: 5
@@ -197,6 +222,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102006134801111398}
     m_Position: {x: 24, y: 36, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102751843525710662}
+    m_Position: {x: 264, y: 36, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -204,6 +232,6 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 36, y: -36, z: 0}
   m_EntryPosition: {x: 48, y: 108, z: 0}
-  m_ExitPosition: {x: 360, y: 72, z: 0}
+  m_ExitPosition: {x: 468, y: 132, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102006134801111398}

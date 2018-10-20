@@ -10,8 +10,6 @@ public class EnemyManager : MonoBehaviour {
 
 	private EnemyController ec;
 
-	public List<Slot> dropItems = new List<Slot>();
-
 	void Start(){
 		ec = GetComponent<EnemyController>();
 		animator = GetComponent<Animator>();

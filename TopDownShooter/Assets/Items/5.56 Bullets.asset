@@ -19,6 +19,7 @@ MonoBehaviour:
   timeToUse: 0
   maxDropCount: 13
   itemColor: {r: 1, g: 0.80784315, b: 0, a: 0.6117647}
+  timeToPick: 0.25
   prefab: {fileID: 1414464841766118, guid: 3473d515446285e488bc81a2e93d02f3, type: 2}
   description: Medium sized cartridges for the famous Cobra pistol 9. They contain
     only 13 cartridges, they are the cheapest, but effective in the market.

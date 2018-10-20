@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f6ce48ee9c78b643a1fc5357e26414d, type: 3}
+  m_Name: Crasher
+  m_EditorClassIdentifier: 
+  name: Crasher
+  type: 4
+  icon: {fileID: 21300000, guid: a1375afefa398084d9603c5d53bfd4c7, type: 3}
+  weight: 2.6
+  stackSize: 1
+  timeToUse: 0
+  maxDropCount: 1
+  itemColor: {r: 0, g: 0.67058825, b: 1, a: 0.6117647}
+  timeToPick: 2
+  prefab: {fileID: 1698438403671606, guid: 0127f49e355c0a14694058f2f741d668, type: 2}
+  description: 
+  canWear: 0
+  canUse: 0
+  isWeapon: 1

@@ -25,9 +25,12 @@ public class Inventory : MonoBehaviour {
 
 	public float weight;
 	public float maxWeight;
+
 	public List<Slot> items = new List<Slot>();
 
 	public List<Slot> fastItems = new List<Slot>();
+
+	public List<Slot> weaponItems = new List<Slot>();
 
 	public Transform itemInfoPanel;
 
@@ -36,6 +39,11 @@ public class Inventory : MonoBehaviour {
 	public int selectedSlot = 0;
 
 	public bool isRightClick;
+
+	void Start(){
+		if(onItemChangedCallBack != null)
+			onItemChangedCallBack.Invoke();
+	}
 
 	public bool Add(Item item, int iCount){
 		if(items.Count >= invSpace && (weight + item.weight) * iCount < maxWeight){
@@ -102,6 +110,41 @@ public class Inventory : MonoBehaviour {
 			onItemChangedCallBack.Invoke();
 	}
 
+	public void RemoveWeapon(int id){
+		if(weaponItems.Count != 0){
+			if(id < weaponItems.Count){
+				Debug.Log("Removed weapon!");
+				weaponItems[id].item = null;
+			}
+		}
+	}
+
+	public void Arm(){
+		isRightClick = false;
+
+/*		if(weaponItems.Count >= fastItemsSpace){
+			Debug.Log("Not enoght space!");
+			if(onItemChangedCallBack != null)
+				onItemChangedCallBack.Invoke();
+			return;
+		}*/
+
+		if((int)items[selectedSlot].item.type == 3){
+			//bool isHaveItem = CheckWeaponItems();
+			//if(!isHaveItem){
+				weaponItems[0].item = items[selectedSlot].item;
+			//}
+		}
+
+		if((int)items[selectedSlot].item.type == 4){
+			//bool isHaveItem = CheckWeaponItems();
+			weaponItems[1].item = items[selectedSlot].item;
+		}
+
+		if(onItemChangedCallBack != null)
+			onItemChangedCallBack.Invoke();
+	}
+
 	public void Wear(){
 		isRightClick = false;
 
@@ -121,6 +164,15 @@ public class Inventory : MonoBehaviour {
 			onItemChangedCallBack.Invoke();
 	}
 
+	private bool CheckWeaponItems(){
+		for(int i = 0; i < weaponItems.Count; i++){
+			if(weaponItems.Count > 0){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private bool CheckFastItems(){
 		for(int i = 0; i < fastItems.Count; i++){
 			if(fastItems[i].item == items[selectedSlot].item){
@@ -131,9 +183,11 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void RemoveFastSlot(int id){
-		Debug.Log("Remove " + id + " slot!");
-		if(fastItems.Count > 0){
-			fastItems.Remove(fastItems[id]);
+		if(fastItems.Count != 0){
+			if(id < fastItems.Count){
+				Debug.Log("Remove " + id + " slot!");
+				fastItems.Remove(fastItems[id]);
+			}
 		}
 	}
 
@@ -151,7 +205,6 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void CheckRepeat(Item item, int iCount){
-	int count = iCount;
 		if(items.Count == 0){
 			Debug.Log("Stacking!");
 			Stacking(iCount ,item);	

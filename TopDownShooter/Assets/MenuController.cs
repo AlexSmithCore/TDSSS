@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour {
 
@@ -46,13 +47,14 @@ public class MenuController : MonoBehaviour {
 	}
 
 	public void NewGame(){
-		menuUI.SetActive(false);
+		/*menuUI.SetActive(false);
 		cam.GetComponent<ParallaxSystem>().enabled = false;
 		fadeIn.SetTrigger("FadeIn");
-		gameStart = true;
+		gameStart = true;*/
+		SceneManager.LoadScene(2);
 	}
 
-	void Update(){
+	/*void Update(){
 		if(!gameStart){
 			return;
 		}
@@ -63,12 +65,12 @@ public class MenuController : MonoBehaviour {
 			smoothStart.z = -10;
 			cam.transform.position = smoothStart;
 		} else {
-			StartCoroutine(cam.GetComponent<ParallaxSystem>().Play());
+			//StartCoroutine(cam.GetComponent<ParallaxSystem>().Play());
 			Application.LoadLevel(1);
 			cam.orthographicSize = 5;
 
 		}
-	}
+	}*/
 
 	void Play(){
 

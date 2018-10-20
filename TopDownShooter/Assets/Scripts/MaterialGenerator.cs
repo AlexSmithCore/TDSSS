@@ -82,8 +82,8 @@ public class MaterialGenerator : MonoBehaviour {
         while (y < noiseTex.height) {
             float x = 0.0F;
             while (x < noiseTex.width) {
-                float xCoord = x / noiseTex.width * delta;
-                float yCoord = y / noiseTex.height * delta;
+                //float xCoord = x / noiseTex.width * delta;
+                //float yCoord = y / noiseTex.height * delta;
                 float sampleR = Func(x / delta, y / delta, ranR, ranG);
 				float sampleG = Func(x / delta, y / delta, ranG, ranB);
 				float sampleB = Func(x / delta, y / delta, ranB, ranA);

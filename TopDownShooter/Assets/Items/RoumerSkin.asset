@@ -19,7 +19,9 @@ MonoBehaviour:
   timeToUse: 0
   maxDropCount: 1
   itemColor: {r: 0.8745098, g: 0.8745098, b: 0.8745098, a: 0.6117647}
+  timeToPick: 0.5
   prefab: {fileID: 1201252090733712, guid: e591af37a94aff643bae9cee5de40276, type: 2}
   description: 
-  canWear: 0
+  canWear: 1
   canUse: 0
+  isWeapon: 0
