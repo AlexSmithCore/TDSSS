@@ -163,12 +163,12 @@ public class PlayerControl : MonoBehaviour {
 			_inputs.x = Input.GetAxis("Horizontal");
 			_inputs.z = Input.GetAxis("Vertical");
 			
-			animator.SetFloat("Move", _inputs.normalized.magnitude);
+			//animator.SetFloat("Move", _inputs.normalized.magnitude);
 			//animator.Play("Pistol");
 
-			animator.SetFloat("BackFor", + _inputs.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+			animator.SetFloat("Vertical", + _inputs.normalized.z * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
 			+ _inputs.normalized.x * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
-			animator.SetFloat("LeftRight", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
+			animator.SetFloat("Horizontal", _inputs.normalized.x * Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.PI / 180)
 			- _inputs.normalized.z * Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.PI / 180));
 
 // Reload
