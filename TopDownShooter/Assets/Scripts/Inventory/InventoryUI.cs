@@ -98,9 +98,9 @@ public class InventoryUI : MonoBehaviour {
 				weaponSlots[i].ClearItem();
 			}
 
-			if(inventory.weaponItems[i].item == null){
+			/*if(inventory.weaponItems[i].item == null){
 				weaponSlots[i].ClearItem();
-			}
+			}*/
 		}
 
 

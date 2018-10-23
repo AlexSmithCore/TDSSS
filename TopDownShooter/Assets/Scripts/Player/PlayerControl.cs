@@ -63,6 +63,8 @@ public class PlayerControl : MonoBehaviour {
 
 	public GameController gc;
 
+	public GameObject treeChopUI;
+
 	void Start()
 	{
 		gc = FindObjectOfType<GameController>();
@@ -147,16 +149,11 @@ public class PlayerControl : MonoBehaviour {
 			}
 
 			RaycastHit hit;
-			 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, checkDistance,interactMask) && !isInteracting){
-				if(hit.transform.GetComponent<InteractionSystem>().enabled){
-					Debug.Log("Interacting!");
-					interactingObject = hit.transform.GetComponent<InteractionSystem>();
-					isInteracting = true;
-					interactingObject.interacted = isInteracting;
-					interactingObject.Interact();
-					interactionPanel.SetActive(isInteracting);
-				}
-			 }
+			if (Physics.Raycast(transform.position + Vector3.up * 2f, transform.TransformDirection(Vector3.forward), out hit, checkDistance,interactMask) && !isInteracting){
+				CheckRay(hit);
+			} else {
+				treeChopUI.SetActive(false);
+			}
 
 			 animator.Play("Base");
 
@@ -252,5 +249,32 @@ public class PlayerControl : MonoBehaviour {
 
 	public void EndRoll(){
 		isRoll = false;
+	}
+
+	private void CheckRay(RaycastHit hit){
+		if(hit.transform.gameObject == null){
+			return;
+		}
+
+		if(hit.transform.gameObject.tag == "Tree"){
+			Tree.TreeManager tm = hit.transform.GetComponent<Tree.TreeManager>();
+			treeChopUI.SetActive(true);
+			treeChopUI.transform.position = mainCamera.WorldToScreenPoint(hit.transform.position + Vector3.up);
+			if(Input.GetKey(KeyCode.E)){
+				
+			}
+			return;
+		}
+
+		if(hit.transform.GetComponent<InteractionSystem>() != null){
+			if(hit.transform.GetComponent<InteractionSystem>().enabled){
+				Debug.Log("Interacting!");
+				interactingObject = hit.transform.GetComponent<InteractionSystem>();
+				isInteracting = true;
+				interactingObject.interacted = isInteracting;
+				interactingObject.Interact();
+				interactionPanel.SetActive(isInteracting);
+			}
+		}
 	}
 }

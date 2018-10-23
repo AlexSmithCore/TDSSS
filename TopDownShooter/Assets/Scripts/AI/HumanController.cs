@@ -192,7 +192,7 @@ public class HumanController : MonoBehaviour {
 	IEnumerator WorkCheckDelay(int item){
 		checkForWork = true;
 		yield return new WaitForSeconds(2f);
-		isWorking = hm.FindItem(item);
+		//isWorking = hm.FindItem(item);
 		if(!isWorking){
 			StartCoroutine(WorkCheckDelay(item));
 		} else {
@@ -206,8 +206,8 @@ public class HumanController : MonoBehaviour {
 		isCuttingsTrees = true;
 		yield return new WaitForSeconds(2f);
 // Wood added
-		hm.AddItem(1,1);
-		goToStock = hm.IsItemsWeHave(1,5);
+		//hm.AddItem(1,1);
+		//goToStock = hm.IsItemsWeHave(1,5);
 		if(!goToStock){
 			isCuttingsTrees = false;
 		} else {

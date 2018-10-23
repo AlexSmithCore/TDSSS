@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour {
 
 		CheckRepeat(item,iCount);
 
-		ItemInfoPanel(item, iCount);
+		//ItemInfoPanel(item, iCount);
 
 		if(onItemChangedCallBack != null)
 			onItemChangedCallBack.Invoke();

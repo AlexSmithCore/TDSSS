@@ -12,6 +12,7 @@ public class Item : ScriptableObject {
 		ammo = 2,
 		weapon = 3,
 		melee = 4,
+		materials = 5,
 	}
 
 	public Type type;
